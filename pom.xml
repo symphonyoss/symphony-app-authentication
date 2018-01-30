@@ -19,6 +19,11 @@
     <description>Components for third-party apps authentication</description>
     <url>https://github.com/symphonyoss/symphony-app-authentication</url>
 
+    <modules>
+        <module>symphony-app-authentication-filter</module>
+        <module>symphony-app-authentication-filter-starter</module>
+    </modules>
+
     <inceptionYear>2018</inceptionYear>
     <organization>
         <name>Symphony</name>
