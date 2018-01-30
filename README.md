@@ -1,0 +1,2 @@
+# Symphony Third-Party Authentication
+
