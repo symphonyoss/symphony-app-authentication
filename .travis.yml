@@ -24,7 +24,8 @@ language: java
 
 install: true
 script:
-- "mvn clean install"
+- "if [[ \"$TRAVIS_PULL_REQUEST\" != \"false\" ]]; then mvn clean install; fi"
+- "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then mvn clean install; fi"
 
 jdk:
   - oraclejdk8
