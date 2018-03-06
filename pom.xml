@@ -20,8 +20,10 @@
     <url>https://github.com/symphonyoss/symphony-app-authentication</url>
 
     <modules>
+        <module>symphony-app-authentication-common</module>
         <module>symphony-app-authentication-filter</module>
         <module>symphony-app-authentication-filter-starter</module>
+        <module>symphony-app-authentication-api</module>
     </modules>
 
     <inceptionYear>2018</inceptionYear>
