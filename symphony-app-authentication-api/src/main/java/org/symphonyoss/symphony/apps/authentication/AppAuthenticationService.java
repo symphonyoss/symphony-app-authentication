@@ -14,11 +14,11 @@ import java.security.SecureRandom;
  */
 public class AppAuthenticationService {
 
-  private final SecureRandom secureRandom = new SecureRandom();
+  private SecureRandom secureRandom = new SecureRandom();
 
-  private final AppAuthenticationApiClient apiClient = new AppAuthenticationApiClient();
+  private AppAuthenticationApiClient apiClient = new AppAuthenticationApiClient();
 
-  private final StoreTokensProviderFactory factory = StoreTokensProviderFactory.getInstance();
+  private StoreTokensProviderFactory factory = StoreTokensProviderFactory.getInstance();
 
   /**
    * Start the JWT authentication between the App and the POD.

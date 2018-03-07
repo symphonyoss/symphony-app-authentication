@@ -29,15 +29,7 @@ public class KeystoreProviderFactoryTest {
 
   @Test
   public void testFactory() {
-    try {
-      factory.getComponent();
-      fail();
-    } catch (IllegalStateException e) {
-      assertEquals("There is no implementation defined for this component", e.getMessage());
-    }
-
     factory.setComponent(provider);
-
     assertEquals(provider, factory.getComponent());
   }
 

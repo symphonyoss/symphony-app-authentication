@@ -51,7 +51,7 @@ public class AppAuthenticationServlet extends AppBaseServlet {
     PodInfoClient podInfoClient = PodInfoClientFactory.getInstance().getComponent();
     PodInfo podInfo = podInfoClient.getPodInfo(appId);
 
-    if (podInfo.verifyPodId(podId)) {
+    if (!podInfo.verifyPodId(podId)) {
       ErrorResponse errorResponse = new ErrorResponse();
       errorResponse.setCode(HttpServletResponse.SC_UNAUTHORIZED);
       errorResponse.setMessage(String.format(UNAUTHORIZED_MESSAGE, podId));

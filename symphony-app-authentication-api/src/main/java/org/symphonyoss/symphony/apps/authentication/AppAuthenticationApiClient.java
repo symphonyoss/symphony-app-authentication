@@ -105,6 +105,8 @@ public class AppAuthenticationApiClient {
         throw new AppAuthenticationException("Failure to authenticate app: " + appId + " due to "
             + "http error: " + response.toString());
       }
+    } catch (AppAuthenticationException e) {
+      throw e;
     } catch (Exception e) {
       throw new AppAuthenticationException("Unexpected error to authenticate app: " + appId, e);
     } finally {

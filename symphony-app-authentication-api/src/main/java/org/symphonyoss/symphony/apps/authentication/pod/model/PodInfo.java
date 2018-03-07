@@ -31,8 +31,16 @@ public class PodInfo {
     return podId;
   }
 
+  public void setPodId(String podId) {
+    this.podId = podId;
+  }
+
   public String getExternalPodId() {
     return externalPodId;
+  }
+
+  public void setExternalPodId(String externalPodId) {
+    this.externalPodId = externalPodId;
   }
 
   public boolean verifyPodId(String podId) {
