@@ -60,7 +60,7 @@ public class TokensValidationServlet extends AppBaseServlet {
       errorResponse.setCode(HttpServletResponse.SC_UNAUTHORIZED);
       errorResponse.setMessage(String.format(UNAUTHORIZED_PAIR, appToken, symphonyToken));
 
-      writeJsonObject(response, appToken, HttpServletResponse.SC_OK);
+      writeJsonObject(response, errorResponse, errorResponse.getCode());
     }
   }
 
