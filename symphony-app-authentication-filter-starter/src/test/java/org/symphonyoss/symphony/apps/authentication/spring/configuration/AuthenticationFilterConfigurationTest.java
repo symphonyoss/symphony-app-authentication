@@ -75,7 +75,7 @@ public class AuthenticationFilterConfigurationTest {
   public void testNullCacheInfo() {
     FilterRegistrationBean registrationBean =
         configuration.authenticationFilter(jsonParser, certificateClient, servicesInfoProvider,
-            new AuthenticationProperties());
+            new AuthenticationProperties(), null);
 
     verify(parserFactory, times(1)).setComponent(jsonParser);
     verify(certificateClientFactory, times(1)).setComponent(certificateClient);
@@ -94,7 +94,7 @@ public class AuthenticationFilterConfigurationTest {
 
     FilterRegistrationBean registrationBean =
         configuration.authenticationFilter(jsonParser, certificateClient, servicesInfoProvider,
-            properties);
+            properties, null);
 
     verify(parserFactory, times(1)).setComponent(jsonParser);
     verify(certificateClientFactory, times(1)).setComponent(certificateClient);
@@ -117,7 +117,7 @@ public class AuthenticationFilterConfigurationTest {
 
     FilterRegistrationBean registrationBean =
         configuration.authenticationFilter(jsonParser, certificateClient, servicesInfoProvider,
-            properties);
+            properties, null);
 
     verify(parserFactory, times(1)).setComponent(jsonParser);
     verify(certificateClientFactory, times(1)).setComponent(certificateClient);
@@ -138,11 +138,9 @@ public class AuthenticationFilterConfigurationTest {
     AuthenticationProperties properties = new AuthenticationProperties();
     properties.setCache(cacheProperties);
 
-    properties.setFilter(new AuthenticationFilterProperties());
-
     FilterRegistrationBean registrationBean =
         configuration.authenticationFilter(jsonParser, certificateClient, servicesInfoProvider,
-            properties);
+            properties, new AuthenticationFilterProperties());
 
     verify(parserFactory, times(1)).setComponent(jsonParser);
     verify(certificateClientFactory, times(1)).setComponent(certificateClient);
@@ -166,11 +164,9 @@ public class AuthenticationFilterConfigurationTest {
     AuthenticationFilterProperties filterProperties = new AuthenticationFilterProperties();
     filterProperties.setUrlPatterns(Collections.singletonList(MOCK_URL_PATTERN));
 
-    properties.setFilter(filterProperties);
-
     FilterRegistrationBean registrationBean =
         configuration.authenticationFilter(jsonParser, certificateClient, servicesInfoProvider,
-            properties);
+            properties, filterProperties);
 
     verify(parserFactory, times(1)).setComponent(jsonParser);
     verify(certificateClientFactory, times(1)).setComponent(certificateClient);

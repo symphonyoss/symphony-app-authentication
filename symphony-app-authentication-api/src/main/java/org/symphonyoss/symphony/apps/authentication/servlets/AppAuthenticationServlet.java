@@ -2,9 +2,6 @@ package org.symphonyoss.symphony.apps.authentication.servlets;
 
 import org.symphonyoss.symphony.apps.authentication.AppAuthenticationException;
 import org.symphonyoss.symphony.apps.authentication.AppAuthenticationService;
-import org.symphonyoss.symphony.apps.authentication.pod.PodInfoClient;
-import org.symphonyoss.symphony.apps.authentication.pod.PodInfoClientFactory;
-import org.symphonyoss.symphony.apps.authentication.pod.model.PodInfo;
 import org.symphonyoss.symphony.apps.authentication.servlets.model.AppInfo;
 import org.symphonyoss.symphony.apps.authentication.servlets.model.ErrorResponse;
 import org.symphonyoss.symphony.apps.authentication.tokens.model.AppToken;
@@ -36,27 +33,9 @@ public class AppAuthenticationServlet extends AppBaseServlet {
       throws ServletException, IOException {
     AppInfo reqPayload = readPostJsonObject(request, AppInfo.class);
     String appId = reqPayload.getAppId();
-    String podId = reqPayload.getPodId();
 
     if (appId == null) {
       missingParameter(response, "appId");
-      return;
-    }
-
-    if (podId == null) {
-      missingParameter(response, "podId");
-      return;
-    }
-
-    PodInfoClient podInfoClient = PodInfoClientFactory.getInstance().getComponent();
-    PodInfo podInfo = podInfoClient.getPodInfo(appId);
-
-    if (!podInfo.verifyPodId(podId)) {
-      ErrorResponse errorResponse = new ErrorResponse();
-      errorResponse.setCode(HttpServletResponse.SC_UNAUTHORIZED);
-      errorResponse.setMessage(String.format(UNAUTHORIZED_MESSAGE, podId));
-
-      writeJsonObject(response, errorResponse, errorResponse.getCode());
       return;
     }
 

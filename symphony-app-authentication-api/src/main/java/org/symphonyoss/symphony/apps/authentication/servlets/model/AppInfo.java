@@ -9,8 +9,6 @@ public class AppInfo {
 
   private String appId;
 
-  private String podId;
-
   public String getAppId() {
     return appId;
   }
@@ -19,11 +17,4 @@ public class AppInfo {
     this.appId = appId;
   }
 
-  public String getPodId() {
-    return podId;
-  }
-
-  public void setPodId(String podId) {
-    this.podId = podId;
-  }
 }

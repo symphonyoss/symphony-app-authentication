@@ -24,6 +24,8 @@
         <module>symphony-app-authentication-filter</module>
         <module>symphony-app-authentication-filter-starter</module>
         <module>symphony-app-authentication-api</module>
+        <module>symphony-app-authentication-api-starter</module>
+        <module>symphony-app-authentication-starter</module>
     </modules>
 
     <inceptionYear>2018</inceptionYear>
@@ -141,6 +143,11 @@
             <dependency>
                 <groupId>org.glassfish.jersey.core</groupId>
                 <artifactId>jersey-client</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-json-jackson</artifactId>
                 <version>${jersey.version}</version>
             </dependency>
             <dependency>
