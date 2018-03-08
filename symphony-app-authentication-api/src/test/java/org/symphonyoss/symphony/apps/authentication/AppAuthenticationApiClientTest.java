@@ -53,6 +53,8 @@ public class AppAuthenticationApiClientTest {
 
   private static final String AUTHENTICATE_PATH = "/v1/authenticate/extensionApp";
 
+  private static final String MOCK_RESPONSE = "{ \"appId\": \"APP_ID\", \"appToken\": \"ABCD\" }";
+
   @Mock
   private ClientBuilder clientBuilder;
 
@@ -142,7 +144,7 @@ public class AppAuthenticationApiClientTest {
   @Test
   public void testRequestOK() throws AppAuthenticationException {
     doReturn(Response.Status.OK.getStatusCode()).when(response).getStatus();
-    doReturn("{ \"appId\": \"APP_ID\", \"appToken\": \"ABCD\" }").when(response).readEntity(String.class);
+    doReturn(MOCK_RESPONSE).when(response).readEntity(String.class);
 
     AppToken expected = new AppToken();
     expected.setAppId(APP_ID);

@@ -47,6 +47,8 @@ public class AppAuthenticationServletTest {
 
   private static final String MOCK_APP_INFO = "{ \"appId\": \"APP_ID\", \"podId\": \"123\" }";
 
+  private static final String MISSING_POD_ID = "{ \"appId\": \"APP_ID\" }";
+
   @Mock
   private HttpServletRequest request;
 
@@ -100,7 +102,7 @@ public class AppAuthenticationServletTest {
 
   @Test
   public void testMissingPodId() throws IOException, ServletException {
-    doReturn("{ \"appId\": \"APP_ID\" }").doReturn(null).when(reader).readLine();
+    doReturn(MISSING_POD_ID).doReturn(null).when(reader).readLine();
 
     servlet.doPost(request, response);
 

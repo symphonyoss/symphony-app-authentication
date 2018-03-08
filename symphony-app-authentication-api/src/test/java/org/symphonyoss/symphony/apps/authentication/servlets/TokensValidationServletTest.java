@@ -44,6 +44,10 @@ public class TokensValidationServletTest {
   private static final String MOCK_TOKENS = "{ \"appId\": \"APP_ID\", \"appToken\": \"ABCD\", \""
       + "symphonyToken\": \"EFGH\" }";
 
+  private static final String MISSING_APP_TOKEN = "{ \"appId\": \"APP_ID\" }";
+
+  private static final String MISSING_SYMPHONY_TOKEN = "{ \"appId\": \"APP_ID\", \"appToken\": \"ABCD\" }";
+
   @Mock
   private HttpServletRequest request;
 
@@ -92,7 +96,7 @@ public class TokensValidationServletTest {
 
   @Test
   public void testMissingAppToken() throws IOException, ServletException {
-    doReturn("{ \"appId\": \"APP_ID\" }").doReturn(null).when(reader).readLine();
+    doReturn(MISSING_APP_TOKEN).doReturn(null).when(reader).readLine();
 
     servlet.doPost(request, response);
 
@@ -109,7 +113,7 @@ public class TokensValidationServletTest {
 
   @Test
   public void testMissingSymphonyToken() throws IOException, ServletException {
-    doReturn("{ \"appId\": \"APP_ID\", \"appToken\": \"ABCD\" }").doReturn(null).when(reader).readLine();
+    doReturn(MISSING_SYMPHONY_TOKEN).doReturn(null).when(reader).readLine();
 
     servlet.doPost(request, response);
 
