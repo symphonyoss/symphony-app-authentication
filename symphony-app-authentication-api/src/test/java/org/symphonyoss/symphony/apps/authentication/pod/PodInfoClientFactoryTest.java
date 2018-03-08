@@ -28,15 +28,7 @@ public class PodInfoClientFactoryTest {
 
   @Test
   public void testFactory() {
-    try {
-      factory.getComponent();
-      fail();
-    } catch (IllegalStateException e) {
-      assertEquals("There is no implementation defined for this component", e.getMessage());
-    }
-
     factory.setComponent(client);
-
     assertEquals(client, factory.getComponent());
   }
 
