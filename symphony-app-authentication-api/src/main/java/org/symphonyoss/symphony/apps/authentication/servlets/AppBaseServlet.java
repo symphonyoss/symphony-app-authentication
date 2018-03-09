@@ -20,9 +20,9 @@ public abstract class AppBaseServlet extends HttpServlet {
 
   private static final String MISSING_PARAMETER = "Missing the required parameter %s";
 
-  private static final String CONTENT_TYPE = "Content-Type";
+  public static final String CONTENT_TYPE = "Content-Type";
 
-  private static final String APPLICATION_JSON = "application/json";
+  public static final String APPLICATION_JSON = "application/json";
 
   /**
    * Read HTTP request payload.

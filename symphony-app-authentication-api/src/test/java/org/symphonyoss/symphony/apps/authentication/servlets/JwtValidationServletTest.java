@@ -4,6 +4,8 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.symphonyoss.symphony.apps.authentication.servlets.AppBaseServlet.APPLICATION_JSON;
+import static org.symphonyoss.symphony.apps.authentication.servlets.AppBaseServlet.CONTENT_TYPE;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -86,6 +88,7 @@ public class JwtValidationServletTest {
 
     verify(response, times(1)).setStatus(HttpServletResponse.SC_BAD_REQUEST);
     verify(writer, times(1)).write(expected);
+    verify(response, times(1)).addHeader(CONTENT_TYPE, APPLICATION_JSON);
   }
 
   @Test
@@ -108,6 +111,7 @@ public class JwtValidationServletTest {
 
     verify(response, times(1)).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     verify(writer, times(1)).write(expected);
+    verify(response, times(1)).addHeader(CONTENT_TYPE, APPLICATION_JSON);
   }
 
   @Test
