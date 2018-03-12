@@ -20,6 +20,10 @@ public abstract class AppBaseServlet extends HttpServlet {
 
   private static final String MISSING_PARAMETER = "Missing the required parameter %s";
 
+  public static final String CONTENT_TYPE = "Content-Type";
+
+  public static final String APPLICATION_JSON = "application/json";
+
   /**
    * Read HTTP request payload.
    *
@@ -82,6 +86,8 @@ public abstract class AppBaseServlet extends HttpServlet {
     String content = parser.writeToString(payload);
 
     writeResponse(response, content, status);
+
+    response.addHeader(CONTENT_TYPE, APPLICATION_JSON);
   }
 
   /**
