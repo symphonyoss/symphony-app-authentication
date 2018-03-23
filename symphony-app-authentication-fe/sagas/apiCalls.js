@@ -1,10 +1,6 @@
 import axios from 'axios';
 
-const port = window.location.port;
-const hostPort = (!port || port.length === 0) ? `` : `:${port}`;
-const baseUrl = `${window.location.protocol}//${window.location.hostname}${hostPort}/integration`;
-
-const baseAuthenticationUrl;;
+const baseAuthenticationUrl = "";
 
 export default class ApiCalls {
 
