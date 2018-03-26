@@ -104,65 +104,7 @@ export const Utils = (function utils() {
     return instances;
   };
 
-  pub.getUserRooms = (rooms) => {
-    const regExp = /\//g;
-    userRooms = [];
-    for (const obj in rooms) {
-      if (rooms[obj].userIsOwner) {
-        rooms[obj].threadId = rooms[obj].threadId.replace(regExp, '_').replace('==', '');
-        userRooms.push({
-          threadId: rooms[obj].threadId,
-          name: rooms[obj].name,
-          creatorPrettyName: rooms[obj].creatorPrettyName,
-          memberCount: rooms[obj].memberCount,
-          publicRoom: rooms[obj].publicRoom,
-          streamType: rooms[obj].roomType,
-        });
-      }
-    }
-    return userRooms;
-  };
   return pub;
-}());
-
-export function copyToClipboard(target, cb) {
-  // Copy to clipboard without displaying an input...
-  const textarea = document.createElement('textarea');
-  textarea.style.position = 'relative';
-  textarea.style.top = 0;
-  textarea.style.left = 0;
-  textarea.style.width = '1px';
-  textarea.style.height = '1px';
-  textarea.style.padding = 0;
-  textarea.style.border = 0;
-  textarea.style.outline = 0;
-  textarea.style.boxShadow = 0;
-  textarea.style.background = 'transparent';
-  textarea.style.fontSize = 0;
-
-  const webhookUrl = document.querySelector(target.dataset.copytarget) ?
-    document.querySelector(target.dataset.copytarget).getAttribute('data-value') : null;
-
-  textarea.value = webhookUrl;
-
-  if (textarea) {
-    target.parentNode.appendChild(textarea);
-    textarea.select();
-    try {
-      // copy text
-      document.execCommand('copy');
-      target.innerHTML = 'Copied!';
-      setTimeout(() => {
-        target.innerHTML = 'Copy URL';
-        target.parentNode.removeChild(target.parentNode.getElementsByTagName('textarea')[0]);
-        cb(true);
-      }, 2000);
-    } catch (err) {
-      console.error(err);
-    }
-  } else {
-    console.error(`element not found ${textarea}`);
-  }
-}
+}())
 
 Object.freeze(Utils);

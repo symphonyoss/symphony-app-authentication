@@ -12,12 +12,12 @@ import {
 */
 export const initApp = (config) => {
 
-  const authenticateApplication = (podInfo) => {
-    return authenticateApp(podInfo.pod);
+  const authenticateApplication = (podInfo, appId) => {
+    return authenticateApp(podInfo.pod, appId);
   }
 
-  const validateAppTokens = (symphonyToken) => {
-    return validateTokens(tokenA, symphonyToken.tokenS);
+  const validateAppTokens = (symphonyToken, appId) => {
+    return validateTokens(tokenA, symphonyToken.tokenS, appId);
   }
 
   const validateJwtToken = (jwt) => {

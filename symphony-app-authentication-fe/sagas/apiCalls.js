@@ -8,21 +8,21 @@ export default class ApiCalls {
   }
 
   authenticateApp(podId, appId) {
-    // use appId 
     const url = `${baseAuthenticationUrl}/authenticate`;
     const payload = {
-        podId
+        podId,
+        appId
     }
 
     return axios.post(url, payload);
   }
 
   validateTokens(applicationToken, symphonyToken, appId) {
-    // use appId 
     const url = `${baseAuthenticationUrl}/tokens/validate`;
     const payload = {
         applicationToken,
-        symphonyToken
+        symphonyToken,
+        appId
     };
 
     return axios.post(url, payload);
