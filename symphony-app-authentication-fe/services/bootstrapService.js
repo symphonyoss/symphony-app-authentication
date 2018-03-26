@@ -18,8 +18,8 @@ export const initApp = (config) => {
   SYMPHONY.services.register(`${config.appId}:controller`);
 
   
-  const authenticateApplication = (podInfo, appId) => {
-    return authenticateApp(podInfo.pod, appId);
+  const authenticateApplication = (podInfo) => {
+    return authenticateApp(podInfo.pod, config.appId);
   }
 
   const registerAuthenticatedApp = (appTokens) => {
@@ -31,8 +31,8 @@ export const initApp = (config) => {
     return registerApplication(config, appData);
   }
 
-  const validateAppTokens = (symphonyToken, appId) => {
-    return validateTokens(tokenA, symphonyToken.tokenS, appId);
+  const validateAppTokens = (symphonyToken) => {
+    return validateTokens(tokenA, symphonyToken.tokenS, config.appId);
   }
 
   const getJwt = () => {
