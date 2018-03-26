@@ -1,4 +1,3 @@
-import { registerApplication } from './registerApplication';
 import {
     authenticateApp,
     validateTokens,
@@ -34,23 +33,3 @@ export const initApp = (config) => {
     console.error(`Fail to register application ${config.appId}`);
   });
 };
-
-/*
-* initAuthenticatedApp                      initializes the communication with the Symphony Client without authentication
-* @params       config                      app settings
-* @return       SYMPHONY.remote.hello       returns a SYMPHONY remote hello service.
-*/
-export const initUnauthenticatedApp = (config) => {
-    // create our own service
-    SYMPHONY.services.register(`${config.appId}:controller`);
-  
-    const registerApp = () => {
-      return registerApplication(config, config.appId);
-    }
-  
-    SYMPHONY.remote.hello()
-      .then(registerApp)
-      .fail(() => {
-        console.error(`Fail to register application ${config.appId}`);
-      });
-  };
