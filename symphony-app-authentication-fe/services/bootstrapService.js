@@ -28,7 +28,7 @@ export const initApp = (config) => {
     const appId = config.appId;
     const appData = { appId, tokenA };
 
-    return registerApplication(config, appData, enrichers);
+    return registerApplication(config, appData);
   }
 
   const validateAppTokens = (symphonyToken, appId) => {
