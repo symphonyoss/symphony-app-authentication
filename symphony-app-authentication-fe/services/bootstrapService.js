@@ -35,6 +35,11 @@ export const initApp = (config) => {
     return validateTokens(tokenA, symphonyToken.tokenS, appId);
   }
 
+  const getJwt = () => {
+    const userInfoService = SYMPHONY.services.subscribe('extended-user-info');
+    return userInfoService.getJwt();
+  }  
+
   const validateJwtToken = (jwt) => {
     userInfo.jwt = jwt;
     
