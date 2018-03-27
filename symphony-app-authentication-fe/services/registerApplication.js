@@ -1,13 +1,3 @@
-import { Utils } from '../js/utils.service';
-
-const dependencies = [
-  'ui',
-  'extended-user-info',
-  'modules',
-  'entity',
-  'dialogs',
-];
-
 /*
 * registerApplication                       register application on symphony client
 * @params       config                      app settings
@@ -16,8 +6,9 @@ const dependencies = [
 export const registerApplication = (config, appData) => {
   const controllerName = `${config.appId}:controller`;
 
-  return SYMPHONY.application.register(
-          appData, 
-          dependencies, 
-        ).then(register);
+  if (config.dependencies.indexOf('extended-user-info') == -1) {
+    config.dependencies.push('extended-user-info');
+  }
+
+  return SYMPHONY.application.register(appData, config.dependencies, config.exportedDependencies);
 };

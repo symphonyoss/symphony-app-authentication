@@ -1,16 +1,13 @@
 import axios from 'axios';
 
-const baseAuthenticationUrl = "";
-
 export default class ApiCalls {
   constructor(baseAuthenticationUrl) {
-    this.baseAuthenticationUrl = `${baseAuthenticationUrl}/v1/application/jwt`
+    this.baseAuthenticationUrl = `${baseAuthenticationUrl}/v1/application`
   }
 
-  authenticateApp(podId, appId) {
+  authenticateApp(appId) {
     const url = `${baseAuthenticationUrl}/authenticate`;
     const payload = {
-        podId,
         appId
     }
 
@@ -29,7 +26,7 @@ export default class ApiCalls {
   }
 
   validateJwt(jwt) {
-    const url = `${baseAuthenticationUrl}/validate`;
+    const url = `${baseAuthenticationUrl}/jwt/validate`;
     const payload = {
         jwt
     };

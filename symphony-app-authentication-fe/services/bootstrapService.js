@@ -4,6 +4,7 @@ import {
     validateTokens,
     validateJwt
   } from '../sagas/apiCalls';
+import { cacheUserInfo } from './userService'
 
 /*
 * initApp                                   initializes the communication with the Symphony Client
@@ -14,12 +15,10 @@ export const initApp = (config) => {
   let userInfo = {};
   let tokenA = '';
 
-  // create our own service
   SYMPHONY.services.register(`${config.appId}:controller`);
-
   
-  const authenticateApplication = (podInfo) => {
-    return authenticateApp(podInfo.pod, config.appId);
+  const authenticateApplication = () => {
+    return authenticateApp(config.appId);
   }
 
   const registerAuthenticatedApp = (appTokens) => {
@@ -46,10 +45,19 @@ export const initApp = (config) => {
     return validateJwt(jwt);
   }
 
+  const cacheJwt = (response) => {
+    userInfo.userId = response.data;
+
+    cacheUserInfo(userInfo);
+  }  
+
   SYMPHONY.remote.hello()
   .then(authenticateApplication)
+  .then(registerAuthenticatedApp)
   .then(validateAppTokens)
+  .then(getJwt)
   .then(validateJwtToken)
+  .then(cacheJwt)
   .fail(() => {
     console.error(`Fail to register application ${config.appId}`);
   });
