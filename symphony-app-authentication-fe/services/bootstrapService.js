@@ -1,9 +1,5 @@
 import { registerApplication } from './registerApplication';
-import {
-    authenticateApp,
-    validateTokens,
-    validateJwt
-  } from '../sagas/apiCalls';
+import AuthenticationApiCalls from '../api/AuthenticationApiCalls';
 import { cacheUserInfo } from './userService'
 
 /*
@@ -15,10 +11,12 @@ export const initApp = (config) => {
   let userInfo = {};
   let tokenA = '';
 
+  const authenticationApiCalls = new AuthenticationApiCalls(config.baseAuthenticationUrl);
+
   SYMPHONY.services.register(`${config.appId}:controller`);
   
   const authenticateApplication = () => {
-    return authenticateApp(config.appId);
+    return authenticationApiCalls.authenticateApp(config.appId);
   }
 
   const registerAuthenticatedApp = (appTokens) => {
@@ -31,7 +29,7 @@ export const initApp = (config) => {
   }
 
   const validateAppTokens = (symphonyToken) => {
-    return validateTokens(tokenA, symphonyToken.tokenS, config.appId);
+    return authenticationApiCalls.validateTokens(tokenA, symphonyToken.tokenS, config.appId);
   }
 
   const getJwt = () => {
@@ -42,7 +40,7 @@ export const initApp = (config) => {
   const validateJwtToken = (jwt) => {
     userInfo.jwt = jwt;
     
-    return validateJwt(jwt);
+    return authenticationApiCalls.validateJwt(jwt);
   }
 
   const cacheJwt = (response) => {

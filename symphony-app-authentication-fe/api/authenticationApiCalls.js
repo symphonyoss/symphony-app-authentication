@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class ApiCalls {
+export default class AuthenticationApiCalls {
   constructor(baseAuthenticationUrl) {
     this.baseAuthenticationUrl = `${baseAuthenticationUrl}/v1/application`
   }
