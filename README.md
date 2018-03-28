@@ -36,9 +36,9 @@ The library consumer doesn't need to register ServicesInfoProvider implementatio
 
 ###### Example:
 
-```xml
+```yaml
 app-authentication:
-  enabled: false
+  enabled: true
   pod:
     host: ${pod.host}
     port: ${pod.port:443}
