@@ -1,4 +1,5 @@
 import { registerApplication } from './registerApplication';
+import AuthenticationApiCalls from '../api/AuthenticationApiCalls';
 import { cacheUserInfo } from './userService'
 
 /*
