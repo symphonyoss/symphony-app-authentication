@@ -1,11 +1,14 @@
 # Symphony Third-Party Authentication
 
-This Authentication is splited in two parts ()
+This Third-Party Authentication is splited in two parts, Application Authentication Filter and 
+Application Authentication API and both will be explained below:
 
-## Motivation
+## Application Authentication Filter 
+
+#### Motivation
 Enable third-party applications to perform authentication process using Symphony cloud-infrastructure. This approach allows the third-party application to check the user identity within the Symphony platform.
 
-## Workflow
+#### Workflow
 When the application receives an HTTP request, the filter must get the JSON Web Token from the 'Authorization' HTTP header and executes the validation process before retrieve the user information. The validation process consist of the following steps:
 
 Check the algorithm used to sign the JWT. Currently, Symphony supports only RS512 algorithm, other than that should be rejected.
@@ -16,7 +19,7 @@ Other than that, the library should store JWT payload in a local cache as well t
 
 This filter requires the class implementation to get POD and Session Auth base URL's. It must be provided by the library consumer.
 
-## How to use
+#### How to use
 This section describes the steps how to the third-party application should use this library.
 
 1. Declare symphony-app-authentication-filter as dependency in POM file
@@ -26,12 +29,12 @@ This section describes the steps how to the third-party application should use t
 
 The ServicesInfoProvider implementation should retrieve the POD and Session auth base URL's
 
-## Spring Boot Starter
+#### Spring Boot Starter
 To simplify the usage of this library we should provide 'symphony-app-authentication-filter-starter' to enable Spring Boot autoconfiguration. Third-party applications have already been implemented using Spring Boot just needs to declare this starter as dependency.
 
 The library consumer doesn't need to register ServicesInfoProvider implementation in the factory and also doesn't require to register the web filter, the autoconfiguration provided by the library does it for you. We must provide a default implementation for ServicesInfoProvider interface that enables library consumer to describe POD and Session Auth base URL's in the YAML configuration file.
 
-#### Example:
+###### Example:
 
 ```xml
 app-authentication:
@@ -46,3 +49,6 @@ app-authentication:
     url-patterns:
       - "/v1/*"
 ```
+
+## Application Authentication API
+_**TO DO**_
