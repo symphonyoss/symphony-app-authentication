@@ -10,7 +10,7 @@ export const initApp = (config) => {
   let userInfo = {};
   let tokenA = '';
 
-  const authenticationApiCalls = new AuthenticationApiCalls(config.hostName);
+  const authenticationApiCalls = new AuthenticationApiCalls(config.baseAuthenticationUrl);
 
   SYMPHONY.services.register(`${config.appId}:controller`);
   
