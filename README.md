@@ -1,7 +1,8 @@
 # Symphony Third-Party Authentication
 
-This Third-Party Authentication is splited in two parts, Application Authentication Filter and 
-Application Authentication API and both will be explained below:
+This Third-Party Authentication suits to authenticate apps in Symphony platform and authenticate Symphony users in thirdy-part applications.
+The authentication is splited in two parts, **Application Authentication Filter** and 
+**Application Authentication API** and both will be explained below:
 
 ## Application Authentication Filter 
 
@@ -11,8 +12,9 @@ Enable third-party applications to perform authentication process using Symphony
 #### Workflow
 When the application receives an HTTP request, the filter must get the JSON Web Token from the 'Authorization' HTTP header and executes the validation process before retrieve the user information. The validation process consist of the following steps:
 
-Check the algorithm used to sign the JWT. Currently, Symphony supports only RS512 algorithm, other than that should be rejected.
-Check the JWT signature and expiration date using POD public certificate as signing key. POD public certificate should be retrieved through the API call to POD API endpoint: <<POD_URL>>/pod/v1/podcert
+1. Check the algorithm used to sign the JWT. Currently, Symphony supports only RS512 algorithm, other than that should be rejected.
+2. Check the JWT signature and expiration date using POD public certificate as signing key. POD public certificate should be retrieved through the API call to POD API endpoint: ```<<POD_URL>>/pod/v1/podcert```
+
 To improve performance, the library should store the POD public certificate in a local cache (in-memory). This approach will reduce a lot of unnecessary requests to the POD API.
 
 Other than that, the library should store JWT payload in a local cache as well to avoid executing the step 2 all the time for the same token.
@@ -25,7 +27,7 @@ This section describes the steps how to the third-party application should use t
 1. Declare symphony-app-authentication-filter as dependency in POM file
 2. Declare SLF4J implementation as dependency (for example: Log4j, Logback, etc)
 3. Implements ServicesInfoProvider interface and register this as default provider in the ServicesInfoProviderFactory
-4. Register 'org.symphonyoss.integration.application.authentication.jwt.JwtFilter' as a web filter using web.xml descriptor for traditional Java webapps or this approach for Spring boot applications
+4. Register 'org.symphonyoss.integration.application.authentication.jwt.JwtFilter' as a web filter using web.xml descriptor for traditional Java webapps, for Spring boot applications follow [this guide](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/htmlsingle/#boot-features-embedded-container-servlets-filters-listeners-beans) 
 
 The ServicesInfoProvider implementation should retrieve the POD and Session auth base URL's
 
