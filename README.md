@@ -53,4 +53,40 @@ app-authentication:
 ```
 
 ## Application Authentication API
-_**TO DO**_
+
+###### Motivation
+Enable third-party applications to expose API's to allow the app authentication process into the Symphony platform described here.
+
+###### Workflow
+There are three basic workflows: authenticate application, validate token pair and validate JWT.
+
+###### Authenticate application
+We should provide authentication servlet (AppAuthenticationServlet) to receive HTTP POST requests in order to get the required information (appId and podId) and perform the app authentication in the cloud.
+
+This servlet requires the class implementation to get POD and Session auth base URL's, to retrieve app keystore, and to store the app/symphony tokens. All of them must be provided by the library consumer.
+
+###### Validate token pair
+We should provide token validation servlet (TokensValidationServlet) to receive HTTP POST requests in order to get the app and symphony tokens and validate them using the information saved in the previous workflow.
+
+This servlet requires the class implementation to retrieve the app/symphony tokens. It must be provided by the library consumer.
+
+###### Validate JWT
+We should provide JWT validation servlet (JwtValidationServlet) to receive HTTP POST requests in order to validate the Json Web Token provided in the request.
+
+JWT validation is quite similar has been described in this document. Actually, we'll reuse the commons components in both implementations.
+
+###### How to use
+This section describes the steps how to the third-party application should use this library.
+
+1. Declare symphony-app-authentication-api as dependency in POM file
+2. Declare SLF4J implementation as dependency (for example: Log4j, Logback, etc)
+3. Implements ServicesInfoProvider interface and register this as default provider in the ServicesInfoProviderFactory
+4. Implements KeystoreProvider interface and register this as default provider in the KeystoreProviderFactory
+5. Implements StoreTokensProvider interface and register this as default provider in the StoreTokensProviderFactory
+6. Register AppAuthenticationServlet, TokensValidationServlet, and JwtValidationServlet as servlets using web.xml descriptor for traditional Java webapps or this approach for Spring boot applications
+
+The ServicesInfoProvider implementation should retrieve the POD and Session auth base URL's
+
+The KeystoreProvider implementation should retrieve the keystore used to perform authentication on the POD reaching out the ```https://YOUR_POD_SUBDOMAIN-api.symphony.com/sessionauth/v1/authenticate``` endpoint.
+
+The StoreTokensProvider implementation should retrieve/store the app and symphony tokens from/to a persistent storage. The library should provide a default implementation using local cache (in-memory), but it's not recommended for production use, only for tests.
