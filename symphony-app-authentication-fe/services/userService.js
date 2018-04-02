@@ -1,9 +1,11 @@
-let userInfoCache = {};
-
-export const cacheUserInfo = (userInfo) => {
-  userInfoCache = Object.assign({}, userInfo);
-}
-
-export const getUserJWT = () => {
-  return userInfoCache.jwt;
-}
+export default class UserService {
+  userInfoCache = {};
+  
+  cacheUserInfo = (userInfo) => {
+    userInfoCache = Object.assign({}, userInfo);
+  }
+  
+  getUserJWT = () => {
+    return userInfoCache.jwt;
+  }
+};
