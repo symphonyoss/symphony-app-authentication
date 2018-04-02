@@ -49,14 +49,15 @@ export const initApp = (config) => {
     cacheUserInfo(userInfo);
   }  
 
-  SYMPHONY.remote.hello()
+  return SYMPHONY.remote.hello()
   .then(authenticateApplication)
   .then(registerAuthenticatedApp)
   .then(validateAppTokens)
   .then(getJwt)
   .then(validateJwtToken)
   .then(cacheJwt)
-  .fail(() => {
+  .fail((e) => {
     console.error(`Fail to register application ${config.appId}`);
+    console.error(e);
   });
 };
