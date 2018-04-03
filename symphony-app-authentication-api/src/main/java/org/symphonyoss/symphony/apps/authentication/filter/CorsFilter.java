@@ -21,25 +21,21 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CorsFilter implements Filter {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(CorsFilter.class);
+  public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
 
-  private static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
+  public static final String ACCESS_CONTROL_ALLOW_METHODS = "Access-Control-Allow-Methods";
 
-  private static final String ACCESS_CONTROL_ALLOW_METHODS = "Access-Control-Allow-Methods";
+  public static final String ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials";
 
-  private static final String ACCESS_CONTROL_ALLOW_CREDENTIALS = "Access-Control-Allow-Credentials";
+  public static final String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
 
-  private static final String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
+  public static final String ALLOW_METHODS = "GET, OPTIONS, HEAD, PUT, POST";
 
-  private static final String ALLOW_METHODS = "GET, OPTIONS, HEAD, PUT, POST";
+  public static final String OPTIONS_METHOD = "OPTIONS";
 
-  private static final String OPTIONS_METHOD = "OPTIONS";
+  public static final String CONTENT_TYPE_HEADER = "Content-Type";
 
-  private static final String CONTENT_TYPE_HEADER = "Content-Type";
-
-  private static final String ORIGIN_HEADER = "Origin";
-
-  private static final String WILDCARD = "*";
+  public static final String ORIGIN_HEADER = "Origin";
 
   @Override
   public void init(FilterConfig config) throws ServletException {}
