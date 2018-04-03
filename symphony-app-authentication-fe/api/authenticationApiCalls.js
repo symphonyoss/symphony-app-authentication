@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 export default class AuthenticationApiCalls {
-  constructor(baseAuthenticationUrl) {
-    this.baseAuthenticationUrl = `${baseAuthenticationUrl}/v1/application`
+  constructor(baseUrl) {
+    this.baseAuthenticationUrl = `${baseUrl}/v1/application`
   }
 
   authenticateApp(appId) {
-    const url = `${baseAuthenticationUrl}/authenticate`;
+    const url = `${this.baseAuthenticationUrl}/authenticate`;
     const payload = {
         appId
     }
@@ -14,10 +14,10 @@ export default class AuthenticationApiCalls {
     return axios.post(url, payload);
   }
 
-  validateTokens(applicationToken, symphonyToken, appId) {
-    const url = `${baseAuthenticationUrl}/tokens/validate`;
+  validateTokens(appToken, symphonyToken, appId) {
+    const url = `${this.baseAuthenticationUrl}/tokens/validate`;
     const payload = {
-        applicationToken,
+        appToken,
         symphonyToken,
         appId
     };
@@ -26,7 +26,7 @@ export default class AuthenticationApiCalls {
   }
 
   validateJwt(jwt) {
-    const url = `${baseAuthenticationUrl}/jwt/validate`;
+    const url = `${this.baseAuthenticationUrl}/jwt/validate`;
     const payload = {
         jwt
     };

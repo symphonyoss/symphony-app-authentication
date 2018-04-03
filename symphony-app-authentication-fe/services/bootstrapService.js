@@ -1,6 +1,6 @@
 import { registerApplication } from './registerApplication';
-import AuthenticationApiCalls from '../api/AuthenticationApiCalls';
-import { cacheUserInfo } from './userService'
+import AuthenticationApiCalls from '../api/authenticationApiCalls';
+import { cacheUserInfo } from './userService';
 
 /*
 * initApp                                   initializes the communication with the Symphony Client
@@ -14,7 +14,7 @@ export const initApp = (config) => {
   const authenticationApiCalls = new AuthenticationApiCalls(config.baseAuthenticationUrl);
 
   SYMPHONY.services.register(`${config.appId}:controller`);
-  
+ 
   const authenticateApplication = () => {
     return authenticationApiCalls.authenticateApp(config.appId);
   }
@@ -45,18 +45,18 @@ export const initApp = (config) => {
 
   const cacheJwt = (response) => {
     userInfo.userId = response.data;
-
     cacheUserInfo(userInfo);
-  }  
+  }
 
-  SYMPHONY.remote.hello()
+  return SYMPHONY.remote.hello()
   .then(authenticateApplication)
   .then(registerAuthenticatedApp)
   .then(validateAppTokens)
   .then(getJwt)
   .then(validateJwtToken)
   .then(cacheJwt)
-  .fail(() => {
+  .fail((e) => {
     console.error(`Fail to register application ${config.appId}`);
+    throw e;
   });
 };
