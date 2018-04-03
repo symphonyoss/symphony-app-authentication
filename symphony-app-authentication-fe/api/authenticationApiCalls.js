@@ -14,10 +14,10 @@ export default class AuthenticationApiCalls {
     return axios.post(url, payload);
   }
 
-  validateTokens(applicationToken, symphonyToken, appId) {
+  validateTokens(appToken, symphonyToken, appId) {
     const url = `${this.baseAuthenticationUrl}/tokens/validate`;
     const payload = {
-        applicationToken,
+        appToken,
         symphonyToken,
         appId
     };
