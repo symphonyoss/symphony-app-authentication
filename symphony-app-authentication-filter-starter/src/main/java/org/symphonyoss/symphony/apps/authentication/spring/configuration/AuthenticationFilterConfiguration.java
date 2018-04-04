@@ -54,13 +54,13 @@ public class AuthenticationFilterConfiguration {
     CorsFilter filter = new CorsFilter();
 
     FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+    registration.setOrder(1);
 
     List<String> urlPatterns = filterProperties.getUrlPatterns();
     if (!urlPatterns.isEmpty()) {
       registration.setUrlPatterns(urlPatterns);
     }
 
-    registration.setOrder(1);
     return registration;
   }
 
