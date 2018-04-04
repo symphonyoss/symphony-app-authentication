@@ -14,6 +14,7 @@ import org.symphonyoss.symphony.apps.authentication.certificate.PodCertificateCl
 import org.symphonyoss.symphony.apps.authentication.certificate.PodCertificateClientFactory;
 import org.symphonyoss.symphony.apps.authentication.endpoints.ServicesInfoProvider;
 import org.symphonyoss.symphony.apps.authentication.endpoints.ServicesInfoProviderFactory;
+import org.symphonyoss.symphony.apps.authentication.filter.CorsFilter;
 import org.symphonyoss.symphony.apps.authentication.json.JsonParser;
 import org.symphonyoss.symphony.apps.authentication.json.JsonParserFactory;
 import org.symphonyoss.symphony.apps.authentication.spring.properties
@@ -21,6 +22,7 @@ import org.symphonyoss.symphony.apps.authentication.spring.properties
 import org.symphonyoss.symphony.apps.authentication.spring.properties.AuthenticationProperties;
 import org.symphonyoss.symphony.apps.authentication.spring.properties.CacheProperties;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -46,6 +48,23 @@ public class AuthenticationFilterConfiguration {
   private ServicesInfoProviderFactory providerFactory = ServicesInfoProviderFactory.getInstance();
 
   @Bean
+  @ConditionalOnBean({AuthenticationFilterProperties.class})
+  @ConditionalOnProperty(name = "app-authentication.filter.enabled", havingValue = "true", matchIfMissing = true)
+  public FilterRegistrationBean corsFilter(AuthenticationFilterProperties filterProperties) {
+    CorsFilter filter = new CorsFilter();
+
+    FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+
+    List<String> urlPatterns = filterProperties.getUrlPatterns();
+    if (!urlPatterns.isEmpty()) {
+      registration.setUrlPatterns(urlPatterns);
+    }
+
+    registration.setOrder(1);
+    return registration;
+  }
+
+  @Bean
   @ConditionalOnBean({JsonParser.class, PodCertificateClient.class, ServicesInfoProvider.class,
       AuthenticationProperties.class, AuthenticationFilterProperties.class})
   @ConditionalOnProperty(name = "app-authentication.filter.enabled", havingValue = "true", matchIfMissing = true)
@@ -60,6 +79,7 @@ public class AuthenticationFilterConfiguration {
 
     AuthenticationFilter filter = new AuthenticationFilter();
     FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+    registration.setOrder(2);
 
     if (filterProperties == null) {
       return registration;
