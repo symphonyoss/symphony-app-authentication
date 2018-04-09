@@ -45,4 +45,4 @@ script:
 # - "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then npm run license-check ; fi"
 
 # Deploy to npmjs.org using semantic-release; make sure that NPM_TOKEN and GH_TOKEN are set on Travis settings
-after_success: "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then npm run semantic-release ; fi"
+after_success: "npm run semantic-release"
