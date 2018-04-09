@@ -28,7 +28,9 @@ before_install:
   - "nvm install 6.10"
   - "nvm use 6.10"
   - "npm update -g npm"
-  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc  
+  - "cd symphony-app-authentication-fe"
+  - "echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc"
+  - "cd .."
 
 before_script:
 - npm install -g node-license-validator
