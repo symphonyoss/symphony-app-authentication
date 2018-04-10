@@ -39,11 +39,10 @@ before_script:
 - npm install -g semantic-release
 
 install: true
+
 script:
-- "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then mvn clean deploy --settings settings.xml; fi"
-- "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then cd symphony-app-authentication-fe && npm install && cd .. ; fi"
-- "if [[ \"$TRAVIS_PULL_REQUEST\" != \"false\" ]]; then mvn clean install; fi"
-- "if [[ \"$TRAVIS_PULL_REQUEST\" != \"false\" ]]; then cd symphony-app-authentication-fe && npm install && cd .. ; fi"
+- "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then mvn clean deploy --settings settings.xml cd symphony-app-authentication-fe && npm install && cd .. ; fi"
+- "if [[ \"$TRAVIS_PULL_REQUEST\" != \"false\" ]]; then mvn clean install cd symphony-app-authentication-fe && npm install && cd .. ; fi"
 
 #after_success: "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then cd symphony-app-authentication-fe && npm run semantic-release && cd .. ; fi"
 after_success: "cd symphony-app-authentication-fe && npm run semantic-release && cd .."
