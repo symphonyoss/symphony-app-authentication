@@ -36,8 +36,8 @@ before_script:
 install: true
 
 script:
-- "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then mvn clean deploy --settings settings.xml cd symphony-app-authentication-fe && npm install && cd .. ; fi"
-- "if [[ \"$TRAVIS_PULL_REQUEST\" != \"false\" ]]; then mvn clean install cd symphony-app-authentication-fe && npm install && cd .. ; fi"
+- "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then mvn clean deploy --settings settings.xml && cd symphony-app-authentication-fe && npm install && cd .. ; fi"
+- "if [[ \"$TRAVIS_PULL_REQUEST\" != \"false\" ]]; then mvn clean install && cd symphony-app-authentication-fe && npm install && cd .. ; fi"
 
 jdk:
   - oraclejdk8
