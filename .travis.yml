@@ -47,5 +47,4 @@ jdk:
 dist:
   precise
 
-#after_success: "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then cd symphony-app-authentication-fe && npm run semantic-release && cd .. ; fi"
-after_success: "cd symphony-app-authentication-fe && npm run semantic-release && cd .."
+after_success: "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then cd symphony-app-authentication-fe && npm run semantic-release && cd .. ; fi"
