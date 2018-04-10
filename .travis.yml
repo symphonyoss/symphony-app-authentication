@@ -29,14 +29,21 @@ before_install:
   - "npm update -g npm"
   - echo "//registry.npmjs.org/:_authToken=6d72ca03-175e-4fe1-8e05-d140523315ae" > .npmrc  
 
+before_script:
+- npm install -g node-license-validator
+- npm install -g semantic-release
+
 install: true
 
 script:
-- "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then mvn clean deploy --settings settings.xml; fi"
-- "if [[ \"$TRAVIS_PULL_REQUEST\" != \"false\" ]]; then mvn clean install; fi"
+- "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then mvn clean deploy --settings settings.xml cd symphony-app-authentication-fe && npm install && cd .. ; fi"
+- "if [[ \"$TRAVIS_PULL_REQUEST\" != \"false\" ]]; then mvn clean install cd symphony-app-authentication-fe && npm install && cd .. ; fi"
 
 jdk:
   - oraclejdk8
 
 dist:
   precise
+
+#after_success: "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then cd symphony-app-authentication-fe && npm run semantic-release && cd .. ; fi"
+after_success: "cd symphony-app-authentication-fe && npm run semantic-release && cd .."
