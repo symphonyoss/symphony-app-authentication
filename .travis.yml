@@ -23,13 +23,14 @@
 language: java
 
 before_install:
-  - "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash"
-  - "nvm install 6.10"
-  - "nvm use 6.10"
-  - "npm update -g npm"
-  - "echo "//registry.npmjs.org/:_authToken=6d72ca03-175e-4fe1-8e05-d140523315ae" > .npmrc"
+- "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.30.2/install.sh | bash"
+- "nvm install 6.10"
+- "nvm use 6.10"
+- "npm update -g npm"
+- "echo "//registry.npmjs.org/:_authToken=6d72ca03-175e-4fe1-8e05-d140523315ae" > .npmrc"
 
 install: true
+
 script:
 - "if [[ \"$TRAVIS_PULL_REQUEST\" = \"false\" && $TRAVIS_BRANCH =~ dev ]]; then mvn clean deploy --settings settings.xml; fi"
 - "if [[ \"$TRAVIS_PULL_REQUEST\" != \"false\" ]]; then mvn clean install; fi"
