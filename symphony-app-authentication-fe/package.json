@@ -1,6 +1,6 @@
 {
   "name": "symphony-app-authentication-fe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Components of Front-End to supports the apps authentication.",
   "main": "./dist/index.js",
   "scripts": {
