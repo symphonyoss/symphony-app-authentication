@@ -27,7 +27,7 @@ before_install:
   - "nvm install 6.10"
   - "nvm use 6.10"
   - "npm update -g npm"
-#- "echo "//registry.npmjs.org/:_authToken=6d72ca03-175e-4fe1-8e05-d140523315ae" > .npmrc"
+  - echo "//registry.npmjs.org/:_authToken=6d72ca03-175e-4fe1-8e05-d140523315ae" > .npmrc  
 
 install: true
 
