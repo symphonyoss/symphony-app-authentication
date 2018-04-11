@@ -61,6 +61,14 @@
                 <role>Senior Software Engineer</role>
             </roles>
         </developer>
+        <developer>
+            <id>crepache</id>
+            <name>Cassiano Repache</name>
+            <email>crepache@symphony.com</email>
+            <roles>
+                <role>Senior Software Engineer</role>
+            </roles>
+        </developer>
     </developers>
 
     <contributors>
@@ -88,13 +96,13 @@
     </contributors>
 
     <issueManagement>
-        <system>JIRA</system>
-        <url>https://perzoinc.atlassian.net/projects/APP</url>
+        <system>GitHub Issues</system>
+        <url>https://github.com/symphonyoss/symphony-app-authentication/issues</url>
     </issueManagement>
 
     <ciManagement>
-        <system>jenkins</system>
-        <url>https://jenkins2.symphony.com</url>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/symphonyoss/symphony-app-authentication</url>
     </ciManagement>
 
     <scm>
@@ -171,5 +179,52 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>libs-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-release-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
