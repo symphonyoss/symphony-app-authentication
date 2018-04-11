@@ -12,8 +12,43 @@
     <groupId>org.symphonyoss.symphony.apps</groupId>
     <artifactId>symphony-app-authentication-api</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <name>Symphony app authentication API</name>
+    <description>Enables third-party applications to expose the API's to allow the app authentication process into the Symphony platform.</description>
+    <url>https://github.com/symphonyoss/symphony-app-authentication/symphony-app-authentication-api</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>rsanchez</id>
+            <name>Robson Vinicius Vieira Sanchez</name>
+            <email>rsanchez@symphony.com</email>
+            <roles>
+                <role>Senior Software Engineer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>crepache</id>
+            <name>Cassiano Repache</name>
+            <email>crepache@symphony.com</email>
+            <roles>
+                <role>Senior Software Engineer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:symphonyoss/symphony-app-authentication.git</connection>
+        <developerConnection>scm:git:git@github.com:symphonyoss/symphony-app-authentication.git</developerConnection>
+        <url>https://github.com/symphonyoss/symphony-app-authentication</url>
+    </scm>
 
     <dependencies>
         <dependency>
