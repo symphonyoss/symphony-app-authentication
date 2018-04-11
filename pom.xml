@@ -12,12 +12,21 @@
 
     <groupId>org.symphonyoss.symphony.apps</groupId>
     <artifactId>symphony-app-authentication</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <name>Symphony third-party app authentication</name>
     <description>Components for third-party apps authentication</description>
     <url>https://github.com/symphonyoss/symphony-app-authentication</url>
+
+    <modules>
+        <module>symphony-app-authentication-common</module>
+        <module>symphony-app-authentication-filter</module>
+        <module>symphony-app-authentication-filter-starter</module>
+        <module>symphony-app-authentication-api</module>
+        <module>symphony-app-authentication-api-starter</module>
+        <module>symphony-app-authentication-starter</module>
+    </modules>
 
     <inceptionYear>2018</inceptionYear>
     <organization>
@@ -52,6 +61,14 @@
                 <role>Senior Software Engineer</role>
             </roles>
         </developer>
+        <developer>
+            <id>crepache</id>
+            <name>Cassiano Repache</name>
+            <email>crepache@symphony.com</email>
+            <roles>
+                <role>Senior Software Engineer</role>
+            </roles>
+        </developer>
     </developers>
 
     <contributors>
@@ -79,13 +96,13 @@
     </contributors>
 
     <issueManagement>
-        <system>JIRA</system>
-        <url>https://perzoinc.atlassian.net/projects/APP</url>
+        <system>GitHub Issues</system>
+        <url>https://github.com/symphonyoss/symphony-app-authentication/issues</url>
     </issueManagement>
 
     <ciManagement>
-        <system>jenkins</system>
-        <url>https://jenkins2.symphony.com</url>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/symphonyoss/symphony-app-authentication</url>
     </ciManagement>
 
     <scm>
@@ -102,7 +119,7 @@
         <!-- libs -->
         <commons-codec.version>1.4</commons-codec.version>
         <guava.version>20.0</guava.version>
-        <jersey.version>2.26</jersey.version>
+        <jersey.version>2.25.1</jersey.version>
         <jjwt.version>0.9.0</jjwt.version>
         <junit.version>4.12</junit.version>
         <servlet.version>3.1.0</servlet.version>
@@ -137,6 +154,11 @@
                 <version>${jersey.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-json-jackson</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>${commons-codec.version}</version>
@@ -157,5 +179,52 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>libs-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-release-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

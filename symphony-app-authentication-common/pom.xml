@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>symphony-app-authentication</artifactId>
+        <groupId>org.symphonyoss.symphony.apps</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.symphonyoss.symphony.apps</groupId>
+    <artifactId>symphony-app-authentication-common</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Symphony app authentication common</name>
+    <description>Common classes and interfaces to implement authentication stuff for third-party applications</description>
+    <url>https://github.com/symphonyoss/symphony-app-authentication/symphony-app-authentication-common</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>rsanchez</id>
+            <name>Robson Vinicius Vieira Sanchez</name>
+            <email>rsanchez@symphony.com</email>
+            <roles>
+                <role>Senior Software Engineer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>crepache</id>
+            <name>Cassiano Repache</name>
+            <email>crepache@symphony.com</email>
+            <roles>
+                <role>Senior Software Engineer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:symphonyoss/symphony-app-authentication.git</connection>
+        <developerConnection>scm:git:git@github.com:symphonyoss/symphony-app-authentication.git</developerConnection>
+        <url>https://github.com/symphonyoss/symphony-app-authentication</url>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

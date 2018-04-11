@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>symphony-app-authentication</artifactId>
+        <groupId>org.symphonyoss.symphony.apps</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.symphonyoss.symphony.apps</groupId>
+    <artifactId>symphony-app-authentication-starter</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Spring Boot Starter - Symphony app authentication</name>
+    <description>Spring autoconfiguration that implements common interfaces to authenticate third-party applications</description>
+    <url>https://github.com/symphonyoss/symphony-app-authentication/symphony-app-authentication-starter</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>rsanchez</id>
+            <name>Robson Vinicius Vieira Sanchez</name>
+            <email>rsanchez@symphony.com</email>
+            <roles>
+                <role>Senior Software Engineer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>crepache</id>
+            <name>Cassiano Repache</name>
+            <email>crepache@symphony.com</email>
+            <roles>
+                <role>Senior Software Engineer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@github.com:symphonyoss/symphony-app-authentication.git</connection>
+        <developerConnection>scm:git:git@github.com:symphonyoss/symphony-app-authentication.git</developerConnection>
+        <url>https://github.com/symphonyoss/symphony-app-authentication</url>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>[1.5.0,2.0.0)</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.symphonyoss.symphony.apps</groupId>
+            <artifactId>symphony-app-authentication-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
