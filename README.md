@@ -134,7 +134,7 @@ app-authentication:
 ## Application Authentication Front-End
 
 #### Purpose
-This library is responsible for triggering the app authentication process into the Symphony platform performing API
+This library is responsible for triggering the app authentication process into the Symphony platform by performing API
 calls to **Application Authentication API** and registering the application controller.
 
 #### Workflow
@@ -154,13 +154,13 @@ The `SYMPHONY.remote.hello()` method should be used to initialize the connection
 
 #### Authenticate application
 
-This process reaches out the **Application Authentication API** in order to authenticate the application providing only
-the appId.
+This process reaches out the **Application Authentication API** in order to authenticate the application by providing
+only the appId.
 
 #### Register application controller
 
-The `SYMPHONY.application.register()` registers our application controller with the Symphony client. Additionally, subscribe the application
-to remote services and register local services that can be used remotely.
+The `SYMPHONY.application.register()` registers your application controller into the Symphony client. Additionally,
+subscribe the application to remote services and register local services that can be used remotely.
 
 To achieve this, the library must provide the application token generated in the previous step and also a list of
 required external dependencies as well as a list of dependencies to be exported.
@@ -184,7 +184,7 @@ To achieve this, the library must reach out the **Application Authentication API
 #### Cache JWT
 
 Once the JWT returned by Symphony's frontend has been validated in the previous step, the library must cache it
-locally to allow our application to retrieve when it requires.
+locally to allow your application to retrieve this token when it requires.
 
 #### How to use
 
@@ -194,9 +194,9 @@ To use the Client Extension API services, you must include the symphony-api.js J
 <script type="text/javascript" src="https://www.symphony.com/resources/api/v1.0/symphony-api.js" charset="utf-8"></script>
 ```
 
-You must also import `initApp` function from `symphony-app-authentication-fe` library in our javascript code.
+You must also import `initApp` function from `symphony-app-authentication-fe` library in your javascript code.
 
-Then, in our application bootstrap, you must call `initApp` function providing a JSON object that contains appId,
+Then, in your application bootstrap, you must call `initApp` function providing a JSON object that contains appId,
 external dependencies, local dependencies you want to export, and base URL for **Application Authentication API**
 
 ```javascript
