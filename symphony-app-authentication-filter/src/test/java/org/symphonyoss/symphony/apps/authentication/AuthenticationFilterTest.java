@@ -54,6 +54,10 @@ public class AuthenticationFilterTest {
 
   private static final String MOCK_SERVLET_PATH = "/servlet/path";
 
+  private static final String GET_METHOD = "GET";
+
+  private static final String OPTIONS_METHOD = "OPTIONS";
+
   @Mock
   private HttpServletRequest request;
 
@@ -84,6 +88,8 @@ public class AuthenticationFilterTest {
 
     doReturn(authorizationHeader).when(request).getHeader(AUTHORIZATION_HEADER);
     doReturn(writer).when(response).getWriter();
+
+    doReturn(GET_METHOD).when(request).getMethod();
   }
 
   @Test
@@ -143,6 +149,19 @@ public class AuthenticationFilterTest {
 
   @Test
   public void testExcludedPaths() throws IOException, ServletException {
+    doReturn(MOCK_SERVLET_PATH).when(request).getServletPath();
+
+    this.excludedPaths.add(MOCK_SERVLET_PATH);
+
+    filter.doFilter(request, response, chain);
+
+    verify(chain, times(1)).doFilter(request, response);
+    verify(request, never()).getHeader(AUTHORIZATION_HEADER);
+  }
+
+  @Test
+  public void testHttpMethodNotAllowed() throws IOException, ServletException {
+    doReturn(OPTIONS_METHOD).when(request).getMethod();
     doReturn(MOCK_SERVLET_PATH).when(request).getServletPath();
 
     this.excludedPaths.add(MOCK_SERVLET_PATH);

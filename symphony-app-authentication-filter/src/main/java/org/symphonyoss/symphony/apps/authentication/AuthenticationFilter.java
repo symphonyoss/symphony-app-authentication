@@ -72,6 +72,9 @@ public class AuthenticationFilter implements Filter {
 
   public static final String EXCLUDED_PATHS = "excluded_paths";
 
+  public static final List<String> HTTP_METHODS_ALLOWED = Arrays.asList("HEAD", "GET", "POST",
+      "PUT", "DELETE", "PATCH");
+
   private final JsonParserFactory parserFactory = JsonParserFactory.getInstance();
 
   private final PodCertificateClientFactory certificateClientFactory = PodCertificateClientFactory.getInstance();
@@ -131,7 +134,7 @@ public class AuthenticationFilter implements Filter {
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-    if (this.excludedPaths.contains(request.getServletPath())) {
+    if (shouldSkipFilter(request)) {
       chain.doFilter(request, servletResponse);
       return;
     }
@@ -156,6 +159,18 @@ public class AuthenticationFilter implements Filter {
       writeErrorResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
           UNEXPECTED_ERROR_MSG);
     }
+  }
+
+  private boolean shouldSkipFilter(HttpServletRequest request) {
+    return isPathExcluded(request) || !isHttpMethodAllowed(request);
+  }
+
+  private boolean isPathExcluded(HttpServletRequest request) {
+    return this.excludedPaths.contains(request.getServletPath());
+  }
+
+  private boolean isHttpMethodAllowed(HttpServletRequest request) {
+    return HTTP_METHODS_ALLOWED.contains(request.getMethod());
   }
 
   /**
