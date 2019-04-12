@@ -16,7 +16,7 @@ import org.symphonyoss.symphony.apps.authentication.json.JsonParser;
 import org.symphonyoss.symphony.apps.authentication.json.JsonParserFactory;
 import org.symphonyoss.symphony.apps.authentication.keystore.KeystoreProvider;
 import org.symphonyoss.symphony.apps.authentication.keystore.KeystoreProviderFactory;
-import org.symphonyoss.symphony.apps.authentication.spring.properties.AppAuthenticationProperties;
+import org.symphonyoss.symphony.apps.authentication.spring.properties.AuthenticationProperties;
 import org.symphonyoss.symphony.apps.authentication.spring.properties
     .AuthenticationServletProperties;
 import org.symphonyoss.symphony.apps.authentication.tokens.StoreTokensProvider;
@@ -84,11 +84,11 @@ public class AuthenticationServletConfigurationTest {
     AuthenticationServletProperties properties = new AuthenticationServletProperties();
     properties.setBasePath(BASE_PATH);
 
-    AppAuthenticationProperties appAuthenticationProperties = new AppAuthenticationProperties();
-    appAuthenticationProperties.setRsaEnabled(RSA_DISABLED);
+    AuthenticationProperties authenticationProperties = new AuthenticationProperties();
+    authenticationProperties.setRsaEnabled(RSA_DISABLED);
 
     ServletRegistrationBean registration = configuration.authenticateServlet(jsonParser,
-        keystoreProvider, provider, storeTokensProvider, properties, appAuthenticationProperties);
+        keystoreProvider, provider, storeTokensProvider, properties, authenticationProperties);
 
     Collection<String> urlMappings = registration.getUrlMappings();
 
@@ -106,15 +106,15 @@ public class AuthenticationServletConfigurationTest {
     AuthenticationServletProperties properties = new AuthenticationServletProperties();
     properties.setBasePath(BASE_PATH);
 
-    AppAuthenticationProperties appAuthenticationProperties = new AppAuthenticationProperties();
-    appAuthenticationProperties.setRsaEnabled(RSA_ENABLED);
-    appAuthenticationProperties.setAppName(APP_NAME);
-    appAuthenticationProperties.setExpiration(EXPIRATION);
-    appAuthenticationProperties.setAppPrivateKeyPath(PRIVATE_KEY_PATH);
-    appAuthenticationProperties.setAppPrivateKeyName(PRIVATE_KEY_NAME);
+    AuthenticationProperties authenticationProperties = new AuthenticationProperties();
+    authenticationProperties.setRsaEnabled(RSA_ENABLED);
+    authenticationProperties.setAppName(APP_NAME);
+    authenticationProperties.setExpiration(EXPIRATION);
+    authenticationProperties.setAppPrivateKeyPath(PRIVATE_KEY_PATH);
+    authenticationProperties.setAppPrivateKeyName(PRIVATE_KEY_NAME);
 
     ServletRegistrationBean registration = configuration.authenticateServlet(jsonParser,
-        keystoreProvider, provider, storeTokensProvider, properties, appAuthenticationProperties);
+        keystoreProvider, provider, storeTokensProvider, properties, authenticationProperties);
 
     Collection<String> urlMappings = registration.getUrlMappings();
 

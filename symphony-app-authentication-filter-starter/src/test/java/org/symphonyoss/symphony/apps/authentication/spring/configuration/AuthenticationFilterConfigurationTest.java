@@ -21,7 +21,7 @@ import org.symphonyoss.symphony.apps.authentication.json.JsonParser;
 import org.symphonyoss.symphony.apps.authentication.json.JsonParserFactory;
 import org.symphonyoss.symphony.apps.authentication.spring.properties
     .AuthenticationFilterProperties;
-import org.symphonyoss.symphony.apps.authentication.spring.properties.AppAuthenticationProperties;
+import org.symphonyoss.symphony.apps.authentication.spring.properties.AuthenticationProperties;
 import org.symphonyoss.symphony.apps.authentication.spring.properties.CacheProperties;
 
 import java.util.Arrays;
@@ -82,7 +82,7 @@ public class AuthenticationFilterConfigurationTest {
   public void testNullCacheInfo() {
     FilterRegistrationBean registrationBean =
         configuration.authenticationFilter(jsonParser, certificateClient, servicesInfoProvider,
-            new AppAuthenticationProperties(), null);
+            new AuthenticationProperties(), null);
 
     verify(parserFactory, times(1)).setComponent(jsonParser);
     verify(certificateClientFactory, times(1)).setComponent(certificateClient);
@@ -96,7 +96,7 @@ public class AuthenticationFilterConfigurationTest {
 
   @Test
   public void testWithoutCacheInfo() {
-    AppAuthenticationProperties properties = new AppAuthenticationProperties();
+    AuthenticationProperties properties = new AuthenticationProperties();
     properties.setCache(new CacheProperties());
 
     FilterRegistrationBean registrationBean =
@@ -119,7 +119,7 @@ public class AuthenticationFilterConfigurationTest {
     cacheProperties.setSize(MOCK_CACHE_SIZE);
     cacheProperties.setTimeout(MOCK_CACHE_TIMEOUT);
 
-    AppAuthenticationProperties properties = new AppAuthenticationProperties();
+    AuthenticationProperties properties = new AuthenticationProperties();
     properties.setCache(cacheProperties);
 
     FilterRegistrationBean registrationBean =
@@ -142,7 +142,7 @@ public class AuthenticationFilterConfigurationTest {
     cacheProperties.setSize(MOCK_CACHE_SIZE);
     cacheProperties.setTimeout(MOCK_CACHE_TIMEOUT);
 
-    AppAuthenticationProperties properties = new AppAuthenticationProperties();
+    AuthenticationProperties properties = new AuthenticationProperties();
     properties.setCache(cacheProperties);
 
     FilterRegistrationBean registrationBean =
@@ -165,7 +165,7 @@ public class AuthenticationFilterConfigurationTest {
     cacheProperties.setSize(MOCK_CACHE_SIZE);
     cacheProperties.setTimeout(MOCK_CACHE_TIMEOUT);
 
-    AppAuthenticationProperties properties = new AppAuthenticationProperties();
+    AuthenticationProperties properties = new AuthenticationProperties();
     properties.setCache(cacheProperties);
 
     AuthenticationFilterProperties filterProperties = new AuthenticationFilterProperties();
@@ -194,7 +194,7 @@ public class AuthenticationFilterConfigurationTest {
     cacheProperties.setSize(MOCK_CACHE_SIZE);
     cacheProperties.setTimeout(MOCK_CACHE_TIMEOUT);
 
-    AppAuthenticationProperties properties = new AppAuthenticationProperties();
+    AuthenticationProperties properties = new AuthenticationProperties();
     properties.setCache(cacheProperties);
 
     AuthenticationFilterProperties filterProperties = new AuthenticationFilterProperties();

@@ -18,7 +18,7 @@ import org.symphonyoss.symphony.apps.authentication.json.JsonParser;
 import org.symphonyoss.symphony.apps.authentication.json.JsonParserFactory;
 import org.symphonyoss.symphony.apps.authentication.spring.properties
     .AuthenticationFilterProperties;
-import org.symphonyoss.symphony.apps.authentication.spring.properties.AppAuthenticationProperties;
+import org.symphonyoss.symphony.apps.authentication.spring.properties.AuthenticationProperties;
 import org.symphonyoss.symphony.apps.authentication.spring.properties.CacheProperties;
 
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Configuration
 @ConditionalOnProperty(name = "app-authentication.enabled", havingValue = "true")
-@EnableConfigurationProperties({AppAuthenticationProperties.class, AuthenticationFilterProperties.class})
+@EnableConfigurationProperties({AuthenticationProperties.class, AuthenticationFilterProperties.class})
 @AutoConfigureAfter({ JsonParserConfiguration.class, PodCertificateClientConfiguration.class,
     ServicesInfoProviderConfiguration.class })
 public class AuthenticationFilterConfiguration {
@@ -50,7 +50,7 @@ public class AuthenticationFilterConfiguration {
   @ConditionalOnProperty(name = "app-authentication.filter.enabled", havingValue = "true", matchIfMissing = true)
   public FilterRegistrationBean authenticationFilter(JsonParser jsonParser,
       PodCertificateClient client, ServicesInfoProvider provider,
-      AppAuthenticationProperties properties, AuthenticationFilterProperties filterProperties) {
+      AuthenticationProperties properties, AuthenticationFilterProperties filterProperties) {
     setupCacheProperties(properties);
 
     parserFactory.setComponent(jsonParser);
@@ -88,7 +88,7 @@ public class AuthenticationFilterConfiguration {
    * Setup cache properties
    * @param properties YAML properties
    */
-  private void setupCacheProperties(AppAuthenticationProperties properties) {
+  private void setupCacheProperties(AuthenticationProperties properties) {
     if ((properties == null) || (properties.getCache() == null)) {
       return;
     }

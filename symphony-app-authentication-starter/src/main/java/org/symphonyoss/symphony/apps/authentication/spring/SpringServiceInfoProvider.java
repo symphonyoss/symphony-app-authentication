@@ -1,7 +1,7 @@
 package org.symphonyoss.symphony.apps.authentication.spring;
 
 import org.symphonyoss.symphony.apps.authentication.endpoints.ServicesInfoProvider;
-import org.symphonyoss.symphony.apps.authentication.spring.properties.AppAuthenticationProperties;
+import org.symphonyoss.symphony.apps.authentication.spring.properties.AuthenticationProperties;
 import org.symphonyoss.symphony.apps.authentication.spring.properties.ServiceAddress;
 
 /**
@@ -17,13 +17,13 @@ public class SpringServiceInfoProvider implements ServicesInfoProvider {
 
   private static final String LOGIN_AUTH_CONTEXT = "login";
 
-  private final AppAuthenticationProperties properties;
+  private final AuthenticationProperties properties;
 
   private String podUrl;
 
   private String sessionAuthUrl;
 
-  public SpringServiceInfoProvider(AppAuthenticationProperties properties) {
+  public SpringServiceInfoProvider(AuthenticationProperties properties) {
     this.properties = properties;
 
     if (properties == null) {

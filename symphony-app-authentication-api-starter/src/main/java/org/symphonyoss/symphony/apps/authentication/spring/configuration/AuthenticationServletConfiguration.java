@@ -23,7 +23,7 @@ import org.symphonyoss.symphony.apps.authentication.keystore.KeystoreProviderFac
 import org.symphonyoss.symphony.apps.authentication.servlets.AppAuthenticationServlet;
 import org.symphonyoss.symphony.apps.authentication.servlets.JwtValidationServlet;
 import org.symphonyoss.symphony.apps.authentication.servlets.TokensValidationServlet;
-import org.symphonyoss.symphony.apps.authentication.spring.properties.AppAuthenticationProperties;
+import org.symphonyoss.symphony.apps.authentication.spring.properties.AuthenticationProperties;
 import org.symphonyoss.symphony.apps.authentication.spring.properties.AuthenticationServletProperties;
 import org.symphonyoss.symphony.apps.authentication.tokens.StoreTokensProvider;
 import org.symphonyoss.symphony.apps.authentication.tokens.StoreTokensProviderFactory;
@@ -70,7 +70,7 @@ public class AuthenticationServletConfiguration {
   public ServletRegistrationBean authenticateServlet(JsonParser jsonParser,
       KeystoreProvider keystoreProvider, ServicesInfoProvider provider,
       StoreTokensProvider storeTokensProvider, AuthenticationServletProperties servletProperties,
-      AppAuthenticationProperties appAuthenticationProperties) {
+      AuthenticationProperties authenticationProperties) {
     parserFactory.setComponent(jsonParser);
     keystoreProviderFactory.setComponent(keystoreProvider);
     providerFactory.setComponent(provider);
@@ -84,14 +84,14 @@ public class AuthenticationServletConfiguration {
     }
 
     String basePath = servletProperties.getBasePath();
-    if (appAuthenticationProperties.isRsaEnabled()) {
+    if (authenticationProperties.isRsaEnabled()) {
       Map<String, String> paramMap = new HashMap<>();
-      paramMap.put(EXPIRATION, Long.toString(appAuthenticationProperties.getExpiration()));
-      paramMap.put(RSA_ENABLED, Boolean.toString(appAuthenticationProperties.isRsaEnabled()));
-      paramMap.put(APP_NAME, appAuthenticationProperties.getAppName());
+      paramMap.put(EXPIRATION, Long.toString(authenticationProperties.getExpiration()));
+      paramMap.put(RSA_ENABLED, Boolean.toString(authenticationProperties.isRsaEnabled()));
+      paramMap.put(APP_NAME, authenticationProperties.getAppName());
       paramMap.put(PRIVATE_KEY,
-          appAuthenticationProperties.getAppPrivateKeyPath()
-              + appAuthenticationProperties.getAppPrivateKeyName());
+          authenticationProperties.getAppPrivateKeyPath()
+              + authenticationProperties.getAppPrivateKeyName());
       registration.setInitParameters(paramMap);
     }
     registration.setUrlMappings(Arrays.asList(basePath + AUTHENTICATE_PATH));
@@ -125,7 +125,7 @@ public class AuthenticationServletConfiguration {
 
   @Bean
   @ConditionalOnBean({JsonParser.class, PodCertificateClient.class, ServicesInfoProvider.class,
-      AppAuthenticationProperties.class, AuthenticationServletProperties.class})
+      AuthenticationProperties.class, AuthenticationServletProperties.class})
   @ConditionalOnProperty(name = "app-authentication.api.enabled", havingValue = "true")
   public ServletRegistrationBean jwtValidationServlet(JsonParser jsonParser,
       PodCertificateClient client, ServicesInfoProvider provider,

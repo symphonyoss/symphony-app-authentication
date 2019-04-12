@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConfigurationProperties(prefix = "app-authentication")
-public class AppAuthenticationProperties {
+public class AuthenticationProperties {
 
   private HttpClientProperties httpClient;
 
