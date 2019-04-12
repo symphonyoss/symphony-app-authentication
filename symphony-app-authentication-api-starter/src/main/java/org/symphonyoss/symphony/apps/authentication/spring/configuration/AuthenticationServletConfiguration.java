@@ -1,5 +1,10 @@
 package org.symphonyoss.symphony.apps.authentication.spring.configuration;
 
+import static org.symphonyoss.symphony.apps.authentication.Constants.APP_NAME;
+import static org.symphonyoss.symphony.apps.authentication.Constants.EXPIRATION;
+import static org.symphonyoss.symphony.apps.authentication.Constants.PRIVATE_KEY;
+import static org.symphonyoss.symphony.apps.authentication.Constants.RSA_ENABLED;
+
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -24,6 +29,8 @@ import org.symphonyoss.symphony.apps.authentication.tokens.StoreTokensProvider;
 import org.symphonyoss.symphony.apps.authentication.tokens.StoreTokensProviderFactory;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Spring Configuration to create authentication servlets
@@ -33,9 +40,9 @@ import java.util.Arrays;
 @Configuration
 @ConditionalOnProperty(name = "app-authentication.enabled", havingValue = "true")
 @EnableConfigurationProperties({AuthenticationServletProperties.class})
-@AutoConfigureAfter({ JsonParserConfiguration.class, PodCertificateClientConfiguration.class,
+@AutoConfigureAfter({JsonParserConfiguration.class, PodCertificateClientConfiguration.class,
     ServicesInfoProviderConfiguration.class, KeystoreProviderConfiguration.class,
-    StoreTokensProviderConfiguration.class })
+    StoreTokensProviderConfiguration.class})
 public class AuthenticationServletConfiguration {
 
   private static final String AUTHENTICATE_PATH = "/authenticate";
@@ -50,9 +57,11 @@ public class AuthenticationServletConfiguration {
 
   private ServicesInfoProviderFactory providerFactory = ServicesInfoProviderFactory.getInstance();
 
-  private PodCertificateClientFactory certificateClientFactory = PodCertificateClientFactory.getInstance();
+  private PodCertificateClientFactory certificateClientFactory =
+      PodCertificateClientFactory.getInstance();
 
-  private StoreTokensProviderFactory storeTokensProviderFactory = StoreTokensProviderFactory.getInstance();
+  private StoreTokensProviderFactory storeTokensProviderFactory =
+      StoreTokensProviderFactory.getInstance();
 
   @Bean
   @ConditionalOnBean({JsonParser.class, KeystoreProvider.class, ServicesInfoProvider.class,
@@ -60,14 +69,14 @@ public class AuthenticationServletConfiguration {
   @ConditionalOnProperty(name = "app-authentication.api.enabled", havingValue = "true")
   public ServletRegistrationBean authenticateServlet(JsonParser jsonParser,
       KeystoreProvider keystoreProvider, ServicesInfoProvider provider,
-      StoreTokensProvider storeTokensProvider, AuthenticationServletProperties servletProperties) {
+      StoreTokensProvider storeTokensProvider, AuthenticationServletProperties servletProperties,
+      AuthenticationProperties authenticationProperties) {
     parserFactory.setComponent(jsonParser);
     keystoreProviderFactory.setComponent(keystoreProvider);
     providerFactory.setComponent(provider);
     storeTokensProviderFactory.setComponent(storeTokensProvider);
 
     AppAuthenticationServlet servlet = new AppAuthenticationServlet();
-
     ServletRegistrationBean registration = new ServletRegistrationBean(servlet);
 
     if (servletProperties == null) {
@@ -75,14 +84,24 @@ public class AuthenticationServletConfiguration {
     }
 
     String basePath = servletProperties.getBasePath();
-
+    if (authenticationProperties.isRsaEnabled()) {
+      Map<String, String> paramMap = new HashMap<>();
+      paramMap.put(EXPIRATION, Long.toString(authenticationProperties.getExpiration()));
+      paramMap.put(RSA_ENABLED, Boolean.toString(authenticationProperties.isRsaEnabled()));
+      paramMap.put(APP_NAME, authenticationProperties.getAppName());
+      paramMap.put(PRIVATE_KEY,
+          authenticationProperties.getAppPrivateKeyPath()
+              + authenticationProperties.getAppPrivateKeyName());
+      registration.setInitParameters(paramMap);
+    }
     registration.setUrlMappings(Arrays.asList(basePath + AUTHENTICATE_PATH));
 
     return registration;
   }
 
   @Bean
-  @ConditionalOnBean({JsonParser.class, StoreTokensProvider.class, AuthenticationServletProperties.class})
+  @ConditionalOnBean(
+      {JsonParser.class, StoreTokensProvider.class, AuthenticationServletProperties.class})
   @ConditionalOnProperty(name = "app-authentication.api.enabled", havingValue = "true")
   public ServletRegistrationBean tokenValidationServlet(JsonParser jsonParser,
       StoreTokensProvider storeTokensProvider, AuthenticationServletProperties servletProperties) {

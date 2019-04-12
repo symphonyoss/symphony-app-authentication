@@ -14,13 +14,23 @@ public class AppToken {
 
   private String appToken;
 
+  private String authToken;
+
   private String symphonyToken;
 
-  public AppToken() { }
+  public AppToken() {
+  }
 
   public AppToken(String appId, String appToken, String symphonyToken) {
     this.appId = appId;
     this.appToken = appToken;
+    this.symphonyToken = symphonyToken;
+  }
+
+  public AppToken(String appId, String appToken, String authToken, String symphonyToken) {
+    this.appId = appId;
+    this.appToken = appToken;
+    this.authToken = authToken;
     this.symphonyToken = symphonyToken;
   }
 
@@ -40,6 +50,14 @@ public class AppToken {
     this.appToken = appToken;
   }
 
+  public String getAuthToken() {
+    return authToken;
+  }
+
+  public void setAuthToken(String authToken) {
+    this.authToken = authToken;
+  }
+
   public String getSymphonyToken() {
     return symphonyToken;
   }
@@ -55,6 +73,7 @@ public class AppToken {
     AppToken appToken1 = (AppToken) o;
     return Objects.equals(appId, appToken1.appId) &&
         Objects.equals(appToken, appToken1.appToken) &&
+        Objects.equals(authToken, appToken1.authToken) &&
         Objects.equals(symphonyToken, appToken1.symphonyToken);
   }
 

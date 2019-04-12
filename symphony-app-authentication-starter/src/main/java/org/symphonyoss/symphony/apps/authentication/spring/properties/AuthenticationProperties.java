@@ -20,6 +20,16 @@ public class AuthenticationProperties {
 
   private ServiceAddress sessionAuth;
 
+  private long expiration;
+
+  private boolean rsaEnabled;
+
+  private String appPrivateKeyPath;
+
+  private String appPrivateKeyName;
+
+  private String appName;
+
   public HttpClientProperties getHttpClient() {
     return httpClient;
   }
@@ -51,6 +61,46 @@ public class AuthenticationProperties {
   public void setSessionAuth(
       ServiceAddress sessionAuth) {
     this.sessionAuth = sessionAuth;
+  }
+
+  public Long getExpiration() {
+    return expiration;
+  }
+
+  public void setExpiration(long expiration) {
+    this.expiration = expiration;
+  }
+
+  public Boolean isRsaEnabled() {
+    return rsaEnabled;
+  }
+
+  public void setRsaEnabled(boolean rsaEnabled) {
+    this.rsaEnabled = rsaEnabled;
+  }
+
+  public String getAppPrivateKeyPath() {
+    return appPrivateKeyPath;
+  }
+
+  public void setAppPrivateKeyPath(String appPrivateKeyPath) {
+    this.appPrivateKeyPath = appPrivateKeyPath;
+  }
+
+  public String getAppPrivateKeyName() {
+    return appPrivateKeyName;
+  }
+
+  public void setAppPrivateKeyName(String appPrivateKeyName) {
+    this.appPrivateKeyName = appPrivateKeyName;
+  }
+
+  public String getAppName() {
+    return appName;
+  }
+
+  public void setAppName(String appName) {
+    this.appName = appName;
   }
 
 }

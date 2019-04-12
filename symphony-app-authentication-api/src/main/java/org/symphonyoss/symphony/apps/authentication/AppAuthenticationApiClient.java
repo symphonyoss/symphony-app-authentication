@@ -44,11 +44,14 @@ public class AppAuthenticationApiClient {
 
   private static final String AUTHENTICATE_PATH = "/v1/authenticate/extensionApp";
 
+  private static final String AUTHENTICATE_RSA_PATH = "/v1/pubkey/app/authenticate/extensionApp";
+
   private static final Integer DEFAULT_CONNECT_TIMEOUT = 10000;
 
   private static final Integer DEFAULT_READ_TIMEOUT = 10000;
 
-  private ServicesInfoProviderFactory servicesInfoProviderFactory = ServicesInfoProviderFactory.getInstance();
+  private ServicesInfoProviderFactory servicesInfoProviderFactory =
+      ServicesInfoProviderFactory.getInstance();
 
   private KeystoreProviderFactory keystoreProviderFactory = KeystoreProviderFactory.getInstance();
 
@@ -58,7 +61,6 @@ public class AppAuthenticationApiClient {
 
   /**
    * Initializes HTTP Client given the application ID.
-   *
    * @param appId Application identifier
    * @return HTTP client
    */
@@ -77,25 +79,30 @@ public class AppAuthenticationApiClient {
 
   /**
    * Authenticates application on the POD.
-   *
    * @param appId Application identifier
    * @param appToken Application token
    * @return Token pair that contains application token and symphony token
    * @throws AppAuthenticationException Failure to authenticate application
    */
-  public AppToken authenticate(String appId, String appToken) throws AppAuthenticationException {
+  public AppToken authenticate(String appId, String appToken, String authToken)
+      throws AppAuthenticationException {
     Client client = initHttpClient(appId);
 
     try {
       ServicesInfoProvider provider = servicesInfoProviderFactory.getComponent();
 
-      WebTarget target = client.target(provider.getSessionAuthBaseUrl()).path(AUTHENTICATE_PATH);
-
+      WebTarget target;
       AppToken token = new AppToken();
       token.setAppToken(appToken);
 
-      Response response = target.request().accept(WILDCARD).post(Entity.json(token));
+      if (authToken != null) {
+        target = client.target(provider.getSessionAuthBaseUrl()).path(AUTHENTICATE_RSA_PATH);
+        token.setAuthToken(authToken);
+      } else {
+        target = client.target(provider.getSessionAuthBaseUrl()).path(AUTHENTICATE_PATH);
+      }
 
+      Response response = target.request().accept(WILDCARD).post(Entity.json(token));
       if (Response.Status.OK.getStatusCode() == response.getStatus()) {
         String json = response.readEntity(String.class);
 

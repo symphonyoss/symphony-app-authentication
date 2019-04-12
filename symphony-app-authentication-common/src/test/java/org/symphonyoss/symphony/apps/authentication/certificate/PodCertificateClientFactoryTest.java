@@ -5,9 +5,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.symphonyoss.symphony.apps.authentication.certificate.model.PodCertificate;
-import org.symphonyoss.symphony.apps.authentication.endpoints.MockServicesInfoProvider;
-import org.symphonyoss.symphony.apps.authentication.endpoints.ServicesInfoProvider;
-import org.symphonyoss.symphony.apps.authentication.endpoints.ServicesInfoProviderFactory;
 
 /**
  * Unit tests for {@link PodCertificateClientFactory}
