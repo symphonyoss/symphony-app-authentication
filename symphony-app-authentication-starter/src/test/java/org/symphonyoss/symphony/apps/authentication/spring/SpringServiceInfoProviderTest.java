@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
-import org.symphonyoss.symphony.apps.authentication.spring.properties.AuthenticationProperties;
+import org.symphonyoss.symphony.apps.authentication.spring.properties.AppAuthenticationProperties;
 import org.symphonyoss.symphony.apps.authentication.spring.properties.ServiceAddress;
 
 /**
@@ -35,7 +35,7 @@ public class SpringServiceInfoProviderTest {
   @Test
   public void testNullPodInfo() {
     try {
-      new SpringServiceInfoProvider(new AuthenticationProperties());
+      new SpringServiceInfoProvider(new AppAuthenticationProperties());
       fail();
     } catch (IllegalArgumentException e) {
       assertEquals("POD address not provided", e.getMessage());
@@ -44,7 +44,7 @@ public class SpringServiceInfoProviderTest {
 
   @Test
   public void testNullPodHost() {
-    AuthenticationProperties properties = new AuthenticationProperties();
+    AppAuthenticationProperties properties = new AppAuthenticationProperties();
     properties.setPod(new ServiceAddress());
 
     try {
@@ -60,7 +60,7 @@ public class SpringServiceInfoProviderTest {
     ServiceAddress pod = new ServiceAddress();
     pod.setHost(MOCK_POD_HOST);
 
-    AuthenticationProperties properties = new AuthenticationProperties();
+    AppAuthenticationProperties properties = new AppAuthenticationProperties();
     properties.setPod(pod);
 
     try {
@@ -76,7 +76,7 @@ public class SpringServiceInfoProviderTest {
     ServiceAddress pod = new ServiceAddress();
     pod.setHost(MOCK_POD_HOST);
 
-    AuthenticationProperties properties = new AuthenticationProperties();
+    AppAuthenticationProperties properties = new AppAuthenticationProperties();
     properties.setPod(pod);
     properties.setSessionAuth(new ServiceAddress());
 
@@ -96,7 +96,7 @@ public class SpringServiceInfoProviderTest {
     ServiceAddress sessionAuth = new ServiceAddress();
     sessionAuth.setHost(MOCK_SESSION_AUTH_HOST);
 
-    AuthenticationProperties properties = new AuthenticationProperties();
+    AppAuthenticationProperties properties = new AppAuthenticationProperties();
     properties.setPod(pod);
     properties.setSessionAuth(sessionAuth);
 
@@ -116,7 +116,7 @@ public class SpringServiceInfoProviderTest {
     sessionAuth.setHost(MOCK_SESSION_AUTH_HOST);
     sessionAuth.setPort(MOCK_SESSION_AUTH_PORT);
 
-    AuthenticationProperties properties = new AuthenticationProperties();
+    AppAuthenticationProperties properties = new AppAuthenticationProperties();
     properties.setPod(pod);
     properties.setSessionAuth(sessionAuth);
 

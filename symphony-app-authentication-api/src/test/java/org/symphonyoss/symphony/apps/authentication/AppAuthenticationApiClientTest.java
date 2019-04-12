@@ -53,7 +53,14 @@ public class AppAuthenticationApiClientTest {
 
   private static final String AUTHENTICATE_PATH = "/v1/authenticate/extensionApp";
 
+  private static final String AUTHENTICATE_PATH_RSA = "/v1/pubkey/app/authenticate/extensionApp";
+
   private static final String MOCK_RESPONSE = "{ \"appId\": \"APP_ID\", \"appToken\": \"ABCD\" }";
+
+  private static final String MOCK_RESPONSE_RSA =
+      "{ \"appId\": \"APP_ID\", \"appToken\": \"ABCD\", \"authToken\": \"AUTH_TOKEN\" }";
+
+  private static final String AUTH_TOKEN = "AUTH_TOKEN";
 
   @Mock
   private ClientBuilder clientBuilder;
@@ -103,7 +110,6 @@ public class AppAuthenticationApiClientTest {
     doReturn(clientBuilder).when(clientBuilder).keyStore(keyStore, PASSWORD);
     doReturn(client).when(clientBuilder).build();
     doReturn(target).when(client).target(BASE_URL);
-    doReturn(target).when(target).path(AUTHENTICATE_PATH);
     doReturn(request).when(target).request();
     doReturn(request).when(request).accept(WILDCARD);
     doReturn(response).when(request).post(Entity.json(token));
@@ -114,7 +120,7 @@ public class AppAuthenticationApiClientTest {
     doThrow(ClientErrorException.class).when(request).post(any(Entity.class));
 
     try {
-      appAuthenticationApiClient.authenticate(APP_ID, APP_TOKEN);
+      appAuthenticationApiClient.authenticate(APP_ID, APP_TOKEN, null);
       fail();
     } catch (AppAuthenticationException e) {
       assertEquals("Unexpected error to authenticate app: " + APP_ID, e.getMessage());
@@ -125,13 +131,14 @@ public class AppAuthenticationApiClientTest {
 
   @Test
   public void testRequestNOK() {
+    doReturn(target).when(target).path(AUTHENTICATE_PATH);
     doReturn(Response.Status.UNAUTHORIZED.getStatusCode()).when(response).getStatus();
 
     String message = "error message";
     doReturn(message).when(response).toString();
 
     try {
-      appAuthenticationApiClient.authenticate(APP_ID, APP_TOKEN);
+      appAuthenticationApiClient.authenticate(APP_ID, APP_TOKEN, null);
       fail();
     } catch (AppAuthenticationException e) {
       assertEquals("Failure to authenticate app: " + APP_ID + " due to http error: " + message,
@@ -142,7 +149,8 @@ public class AppAuthenticationApiClientTest {
   }
 
   @Test
-  public void testRequestOK() throws AppAuthenticationException {
+  public void testRequestOK_certificate() throws AppAuthenticationException {
+    doReturn(target).when(target).path(AUTHENTICATE_PATH);
     doReturn(Response.Status.OK.getStatusCode()).when(response).getStatus();
     doReturn(MOCK_RESPONSE).when(response).readEntity(String.class);
 
@@ -150,7 +158,29 @@ public class AppAuthenticationApiClientTest {
     expected.setAppId(APP_ID);
     expected.setAppToken(APP_TOKEN);
 
-    AppToken result = appAuthenticationApiClient.authenticate(APP_ID, APP_TOKEN);
+    AppToken result = appAuthenticationApiClient.authenticate(APP_ID, APP_TOKEN, null);
+    assertEquals(expected, result);
+
+    verify(client, times(1)).close();
+  }
+
+  @Test
+  public void testRequestOK_rsa() throws AppAuthenticationException {
+    AppToken tokenRSA = new AppToken();
+    tokenRSA.setAppToken(APP_TOKEN);
+    tokenRSA.setAuthToken(AUTH_TOKEN);
+    doReturn(target).when(target).path(AUTHENTICATE_PATH_RSA);
+    doReturn(Response.Status.OK.getStatusCode()).when(response).getStatus();
+    doReturn(MOCK_RESPONSE_RSA).when(response).readEntity(String.class);
+    doReturn(response).when(request).post(Entity.json(tokenRSA));
+
+
+    AppToken expected = new AppToken();
+    expected.setAppId(APP_ID);
+    expected.setAppToken(APP_TOKEN);
+    expected.setAuthToken(AUTH_TOKEN);
+
+    AppToken result = appAuthenticationApiClient.authenticate(APP_ID, APP_TOKEN, AUTH_TOKEN);
     assertEquals(expected, result);
 
     verify(client, times(1)).close();

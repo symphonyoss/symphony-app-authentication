@@ -2,8 +2,6 @@ package org.symphonyoss.symphony.apps.authentication.spring.configuration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +16,7 @@ import org.symphonyoss.symphony.apps.authentication.json.JsonParser;
 import org.symphonyoss.symphony.apps.authentication.json.JsonParserFactory;
 import org.symphonyoss.symphony.apps.authentication.keystore.KeystoreProvider;
 import org.symphonyoss.symphony.apps.authentication.keystore.KeystoreProviderFactory;
+import org.symphonyoss.symphony.apps.authentication.spring.properties.AppAuthenticationProperties;
 import org.symphonyoss.symphony.apps.authentication.spring.properties
     .AuthenticationServletProperties;
 import org.symphonyoss.symphony.apps.authentication.tokens.StoreTokensProvider;
@@ -40,6 +39,18 @@ public class AuthenticationServletConfigurationTest {
   private static final String EXPECTED_TOKENS_PATH = BASE_PATH + "/tokens/validate";
 
   private static final String EXPECTED_JWT_PATH = BASE_PATH + "/jwt/validate";
+
+  private static final String APP_NAME = "APP_NAME";
+
+  private static final Long EXPIRATION = 30000l;
+
+  private static final Boolean RSA_ENABLED = true;
+
+  private static final Boolean RSA_DISABLED = false;
+
+  private static final String PRIVATE_KEY_PATH = "/testFolder/";
+
+  private static final String PRIVATE_KEY_NAME = "key.pkcs8";
 
   @Mock
   private JsonParser jsonParser;
@@ -69,12 +80,41 @@ public class AuthenticationServletConfigurationTest {
   private AuthenticationServletConfiguration configuration = new AuthenticationServletConfiguration();
 
   @Test
-  public void testAuthenticateServlet() {
+  public void testAuthenticateServlet_rsaDisabled() {
     AuthenticationServletProperties properties = new AuthenticationServletProperties();
     properties.setBasePath(BASE_PATH);
 
+    AppAuthenticationProperties appAuthenticationProperties = new AppAuthenticationProperties();
+    appAuthenticationProperties.setRsaEnabled(RSA_DISABLED);
+
     ServletRegistrationBean registration = configuration.authenticateServlet(jsonParser,
-        keystoreProvider, provider, storeTokensProvider, properties);
+        keystoreProvider, provider, storeTokensProvider, properties, appAuthenticationProperties);
+
+    Collection<String> urlMappings = registration.getUrlMappings();
+
+    assertFalse(urlMappings.isEmpty());
+    assertEquals(EXPECTED_AUTHENTICATE_PATH, urlMappings.iterator().next());
+
+    assertEquals(jsonParser, parserFactory.getComponent());
+    assertEquals(keystoreProvider, keystoreProviderFactory.getComponent());
+    assertEquals(provider, providerFactory.getComponent());
+    assertEquals(storeTokensProvider, storeTokensProviderFactory.getComponent());
+  }
+
+  @Test
+  public void testAuthenticateServlet_rsaEnabled() {
+    AuthenticationServletProperties properties = new AuthenticationServletProperties();
+    properties.setBasePath(BASE_PATH);
+
+    AppAuthenticationProperties appAuthenticationProperties = new AppAuthenticationProperties();
+    appAuthenticationProperties.setRsaEnabled(RSA_ENABLED);
+    appAuthenticationProperties.setAppName(APP_NAME);
+    appAuthenticationProperties.setExpiration(EXPIRATION);
+    appAuthenticationProperties.setAppPrivateKeyPath(PRIVATE_KEY_PATH);
+    appAuthenticationProperties.setAppPrivateKeyName(PRIVATE_KEY_NAME);
+
+    ServletRegistrationBean registration = configuration.authenticateServlet(jsonParser,
+        keystoreProvider, provider, storeTokensProvider, properties, appAuthenticationProperties);
 
     Collection<String> urlMappings = registration.getUrlMappings();
 

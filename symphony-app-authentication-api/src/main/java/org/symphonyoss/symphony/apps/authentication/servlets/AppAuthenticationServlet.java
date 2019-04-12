@@ -1,5 +1,10 @@
 package org.symphonyoss.symphony.apps.authentication.servlets;
 
+import static org.symphonyoss.symphony.apps.authentication.Constants.APP_NAME;
+import static org.symphonyoss.symphony.apps.authentication.Constants.EXPIRATION;
+import static org.symphonyoss.symphony.apps.authentication.Constants.PRIVATE_KEY;
+import static org.symphonyoss.symphony.apps.authentication.Constants.RSA_ENABLED;
+
 import org.symphonyoss.symphony.apps.authentication.AppAuthenticationException;
 import org.symphonyoss.symphony.apps.authentication.AppAuthenticationService;
 import org.symphonyoss.symphony.apps.authentication.servlets.model.AppInfo;
@@ -13,10 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet class to receive HTTP POST requests in order to get the required information (appId and podId)
+ * Servlet class to receive HTTP POST requests in order to get the required information (appId and
+ * podId)
  * and perform the app authentication in the cloud.
  * <p>
- * This servlet requires the class implementation to get POD and Session auth base URL's, to retrieve
+ * This servlet requires the class implementation to get POD and Session auth base URL's, to
+ * retrieve
  * app keystore, and to store the app/symphony tokens
  * <p>
  * Created by rsanchez on 06/03/18.
@@ -40,7 +47,15 @@ public class AppAuthenticationServlet extends AppBaseServlet {
     }
 
     try {
-      AppToken appToken = authenticationService.authenticate(appId);
+      AppToken appToken;
+      if (isRSAAuth()) {
+        appToken =
+            authenticationService.rsaAuthenticate(appId, (String) getServletProp(APP_NAME),
+                (String) getServletProp(PRIVATE_KEY),
+                Long.valueOf((String) getServletProp(EXPIRATION)));
+      } else {
+        appToken = authenticationService.authenticate(appId);
+      }
       writeJsonObject(response, appToken, HttpServletResponse.SC_OK);
     } catch (AppAuthenticationException e) {
       ErrorResponse errorResponse = new ErrorResponse();
@@ -50,6 +65,14 @@ public class AppAuthenticationServlet extends AppBaseServlet {
       writeJsonObject(response, errorResponse, errorResponse.getCode());
     }
 
+  }
+
+  private boolean isRSAAuth() {
+    return Boolean.valueOf((String) getServletProp(RSA_ENABLED));
+  }
+
+  private Object getServletProp(String key) {
+    return getServletConfig().getInitParameter(key);
   }
 
 }

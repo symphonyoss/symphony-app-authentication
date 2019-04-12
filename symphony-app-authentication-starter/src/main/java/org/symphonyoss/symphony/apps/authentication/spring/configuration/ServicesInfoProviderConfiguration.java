@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.symphonyoss.symphony.apps.authentication.spring.SpringServiceInfoProvider;
 import org.symphonyoss.symphony.apps.authentication.endpoints.ServicesInfoProvider;
-import org.symphonyoss.symphony.apps.authentication.spring.properties.AuthenticationProperties;
+import org.symphonyoss.symphony.apps.authentication.spring.properties.AppAuthenticationProperties;
 
 /**
  * Spring Configuration to create authentication filter
@@ -16,12 +16,12 @@ import org.symphonyoss.symphony.apps.authentication.spring.properties.Authentica
  */
 @Configuration
 @ConditionalOnProperty(name = "app-authentication.enabled", havingValue = "true")
-@EnableConfigurationProperties(AuthenticationProperties.class)
+@EnableConfigurationProperties(AppAuthenticationProperties.class)
 public class ServicesInfoProviderConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(ServicesInfoProvider.class)
-  public ServicesInfoProvider servicesInfoProvider(AuthenticationProperties properties) {
+  public ServicesInfoProvider servicesInfoProvider(AppAuthenticationProperties properties) {
     return new SpringServiceInfoProvider(properties);
   }
 

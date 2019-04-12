@@ -3,6 +3,7 @@ package org.symphonyoss.symphony.apps.authentication;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -53,7 +54,7 @@ public class AppAuthenticationServiceTest {
     expected.setAppId(APP_ID);
     expected.setAppToken(APP_TOKEN);
 
-    doReturn(expected).when(apiClient).authenticate(eq(APP_ID), anyString());
+    doReturn(expected).when(apiClient).authenticate(eq(APP_ID), anyString(), any());
 
     AppToken result = service.authenticate(APP_ID);
 

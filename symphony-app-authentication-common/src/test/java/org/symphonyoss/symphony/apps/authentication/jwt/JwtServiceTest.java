@@ -16,15 +16,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.symphonyoss.symphony.apps.authentication.certificate.PodCertificateClient;
 import org.symphonyoss.symphony.apps.authentication.certificate.PodCertificateService;
 import org.symphonyoss.symphony.apps.authentication.certificate.exception.PodCertificateException;
 import org.symphonyoss.symphony.apps.authentication.json.JacksonParser;
 import org.symphonyoss.symphony.apps.authentication.json.JsonParserFactory;
 import org.symphonyoss.symphony.apps.authentication.jwt.exception.JwtProcessingException;
-import org.symphonyoss.symphony.apps.authentication.jwt.model.JwtPayload;
 
-import java.io.IOException;
 import java.security.PublicKey;
 
 /**

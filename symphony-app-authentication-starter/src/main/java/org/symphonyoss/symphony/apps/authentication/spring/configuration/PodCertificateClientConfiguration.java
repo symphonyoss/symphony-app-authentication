@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.symphonyoss.symphony.apps.authentication.certificate.PodCertificateClient;
 import org.symphonyoss.symphony.apps.authentication.certificate.PodCertificateJerseyClient;
-import org.symphonyoss.symphony.apps.authentication.spring.properties.AuthenticationProperties;
+import org.symphonyoss.symphony.apps.authentication.spring.properties.AppAuthenticationProperties;
 import org.symphonyoss.symphony.apps.authentication.spring.properties.HttpClientProperties;
 
 /**
@@ -17,12 +17,12 @@ import org.symphonyoss.symphony.apps.authentication.spring.properties.HttpClient
  */
 @Configuration
 @ConditionalOnProperty(name = "app-authentication.enabled", havingValue = "true")
-@EnableConfigurationProperties(AuthenticationProperties.class)
+@EnableConfigurationProperties(AppAuthenticationProperties.class)
 public class PodCertificateClientConfiguration {
 
   @Bean
   @ConditionalOnMissingBean(PodCertificateClient.class)
-  public PodCertificateClient podCertificateClient(AuthenticationProperties properties) {
+  public PodCertificateClient podCertificateClient(AppAuthenticationProperties properties) {
     HttpClientProperties httpClientProperties = properties.getHttpClient();
 
     if (httpClientProperties == null) {

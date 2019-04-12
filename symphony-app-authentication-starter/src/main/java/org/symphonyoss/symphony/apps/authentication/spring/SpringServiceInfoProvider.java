@@ -1,7 +1,7 @@
 package org.symphonyoss.symphony.apps.authentication.spring;
 
 import org.symphonyoss.symphony.apps.authentication.endpoints.ServicesInfoProvider;
-import org.symphonyoss.symphony.apps.authentication.spring.properties.AuthenticationProperties;
+import org.symphonyoss.symphony.apps.authentication.spring.properties.AppAuthenticationProperties;
 import org.symphonyoss.symphony.apps.authentication.spring.properties.ServiceAddress;
 
 /**
@@ -15,13 +15,15 @@ public class SpringServiceInfoProvider implements ServicesInfoProvider {
 
   private static final String SESSION_AUTH_CONTEXT = "sessionauth";
 
-  private final AuthenticationProperties properties;
+  private static final String LOGIN_AUTH_CONTEXT = "login";
+
+  private final AppAuthenticationProperties properties;
 
   private String podUrl;
 
   private String sessionAuthUrl;
 
-  public SpringServiceInfoProvider(AuthenticationProperties properties) {
+  public SpringServiceInfoProvider(AppAuthenticationProperties properties) {
     this.properties = properties;
 
     if (properties == null) {
@@ -29,7 +31,7 @@ public class SpringServiceInfoProvider implements ServicesInfoProvider {
     }
 
     this.podUrl = getPodUrl();
-    this.sessionAuthUrl = getSessionAuthUrl();
+    this.sessionAuthUrl = getSessionAuthUrl(properties.isRsaEnabled());
   }
 
   private String getPodUrl() {
@@ -42,14 +44,14 @@ public class SpringServiceInfoProvider implements ServicesInfoProvider {
     return address.getUrl(POD_CONTEXT);
   }
 
-  private String getSessionAuthUrl() {
+  private String getSessionAuthUrl(Boolean isRsaEnabled) {
     ServiceAddress address = properties.getSessionAuth();
 
     if (address == null) {
       throw new IllegalArgumentException("Session auth address not provided");
     }
 
-    return address.getUrl(SESSION_AUTH_CONTEXT);
+    return isRsaEnabled ? address.getUrl(LOGIN_AUTH_CONTEXT) : address.getUrl(SESSION_AUTH_CONTEXT);
   }
 
   @Override
