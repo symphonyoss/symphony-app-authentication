@@ -1,5 +1,7 @@
 # Symphony Third-Party Authentication
 
+[![FINOS - Archived](https://cdn.jsdelivr.net/gh/finos/contrib-toolbox@master/images/badge-archived.svg)](https://finosfoundation.atlassian.net/wiki/display/FINOS/Archived)
+
 This library allows app authentication into the Symphony platform and also the ability to authenticate Symphony users
  in the third-party application given a JSON Web Token retrieved from the POD.
 
